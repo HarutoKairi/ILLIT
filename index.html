@@ -3,67 +3,753 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music Player</title>
-  <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <title>ILLIT Music Player</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    :root {
+      --primary-color: #ff4d94;
+      --secondary-color: #ff8ab5;
+      --dark-color: #1a1a2e;
+      --light-color: #f8f9fa;
+      --gradient: linear-gradient(135deg, #ff4d94, #ff8ab5);
+      --player-bg: rgba(26, 26, 46, 0.95);
+    }
+
+    body {
+      background: url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070') center/cover no-repeat;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: -1;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 400px;
+      background: var(--player-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      color: var(--light-color);
+      position: relative;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 25px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+    }
+
+    .top-bar i {
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .top-bar i:hover {
+      color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .top-bar span {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .img-area {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 0;
+    }
+
+    .img-area::before {
+      content: '';
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: var(--gradient);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .img-area img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid var(--player-bg);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .song-details {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .song-details .name {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--light-color);
+      letter-spacing: 0.5px;
+    }
+
+    .song-details .artist {
+      font-size: 16px;
+      color: var(--secondary-color);
+      font-weight: 400;
+    }
+
+    .progress-area {
+      padding: 0 30px;
+      margin-top: 15px;
+    }
+
+    .progress-bar {
+      height: 6px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .progress-bar .progress {
+      position: absolute;
+      height: 100%;
+      width: 0%;
+      border-radius: 10px;
+      background: var(--gradient);
+      transition: width 0.1s linear;
+    }
+
+    .song-timer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 30px;
+    }
+
+    .controls i {
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .controls i:hover {
+      color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .controls i.active {
+      color: var(--primary-color);
+    }
+
+    .play-pause {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 77, 148, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .play-pause:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(255, 77, 148, 0.5);
+    }
+
+    .play-pause i {
+      font-size: 32px;
+      color: white;
+    }
+
+    .music-list {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 10, 20, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 20px 20px 0 0;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+
+    .music-list.show {
+      transform: translateY(0);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 25px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .header .row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header i {
+      font-size: 24px;
+      color: var(--primary-color);
+    }
+
+    .header span {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    #close {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #close:hover {
+      color: var(--primary-color);
+      transform: rotate(90deg);
+    }
+
+    ul {
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 0 20px 20px;
+    }
+
+    ul::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ul::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    ul::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 10px;
+    }
+
+    li {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    li:hover {
+      background: rgba(255, 77, 148, 0.1);
+    }
+
+    li.playing {
+      background: rgba(255, 77, 148, 0.2);
+    }
+
+    li .row {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+    }
+
+    li .row img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    li .row .song-info {
+      flex: 1;
+    }
+
+    li .row .song-info .name {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    li .row .song-info .artist {
+      font-size: 13px;
+      color: var(--secondary-color);
+    }
+
+    li .row .duration {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .author {
+      text-align: center;
+      padding: 20px 0;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .author a {
+      color: var(--secondary-color);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .author a:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+
+    .visualizer {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 60px;
+      gap: 3px;
+      padding: 0 30px;
+      margin-top: 10px;
+    }
+
+    .bar {
+      width: 4px;
+      background: var(--gradient);
+      border-radius: 3px 3px 0 0;
+      animation: barAnimation 1.5s ease-in-out infinite;
+    }
+
+    @keyframes barAnimation {
+      0%, 100% {
+        height: 5px;
+      }
+      50% {
+        height: 30px;
+      }
+    }
+
+    .bar:nth-child(2) { animation-delay: 0.2s; height: 10px; }
+    .bar:nth-child(3) { animation-delay: 0.4s; height: 20px; }
+    .bar:nth-child(4) { animation-delay: 0.6s; height: 30px; }
+    .bar:nth-child(5) { animation-delay: 0.8s; height: 25px; }
+    .bar:nth-child(6) { animation-delay: 1.0s; height: 15px; }
+    .bar:nth-child(7) { animation-delay: 1.2s; height: 10px; }
+    .bar:nth-child(8) { animation-delay: 1.4s; height: 5px; }
+
+    @media (max-width: 450px) {
+      .wrapper {
+        max-width: 100%;
+      }
+      
+      .img-area {
+        height: 250px;
+      }
+      
+      .img-area::before {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .img-area img {
+        width: 170px;
+        height: 170px;
+      }
+    }
+  </style>
 </head>
-    <div class="wrapper">
-        <div class="top-bar">
-            <i class="material-icons">expand_more</i>
-            <span>Now Playing</span>
-            <i class="material-icons">more_horiz</i>
-        </div>
-
-        <div class="img-area">
-            <img src="" alt="">
-          
-        </div>
-
-        <div class="song-details">
-            <p class="name"></p>
-            <p class="artist"></p>
-        </div>
-
-        <div class="progress-area">
-            <div class="progress-bar">
-                <audio src="" id="main-audio"></audio>
-            </div>
-            <div class="song-timer">
-                <span class="current-time">
-                    0:00
-                </span>
-                <span class="max-duration">
-                    0:00
-                </span>
-            </div>
-        </div>
-
-        <div class="controls">
-            <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
-            <i id="prev" class="material-icons" >skip_previous</i>
-            <div class="play-pause">
-                <i class="material-icons play" >play_arrow</i>
-            </div>
-            <i id="next" class="material-icons" >skip_next</i>
-            <i id="more-music" class="material-icons" >queue_music</i>
-        </div>
-
-        <div class="music-list">
-            <div class="header">
-                <div class="row">
-                    <i class="list material-icons">queue_music</i>
-                    <span>Music List</span>
-                </div>
-                <i id="close" class="material-icons">close</i>
-            </div>
-            <ul>
-              
-            </ul>
-        </div>
+<body>
+  <div class="wrapper">
+    <div class="top-bar">
+      <i class="material-symbols-outlined">expand_more</i>
+      <span>ILLIT Music Player</span>
+      <i class="material-symbols-outlined">more_horiz</i>
     </div>
 
-    <script src="./js/music-list.js"></script>
-    <script src="./js/script.js"></script>
- 
+    <div class="img-area">
+      <img src="https://i.pinimg.com/564x/cc/df/9e/ccdf9e4d0d6a6a5a7d3c7f1e2b8c4e37.jpg" alt="ILLIT Album Cover">
+    </div>
+    
+    <div class="visualizer">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+
+    <div class="song-details">
+      <p class="name">Magnetic</p>
+      <p class="artist">ILLIT</p>
+    </div>
+
+    <div class="progress-area">
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+      <div class="song-timer">
+        <span class="current-time">0:00</span>
+        <span class="max-duration">3:10</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <i id="repeat-plist" class="material-symbols-outlined" title="Playlist looped">repeat</i>
+      <i id="prev" class="material-symbols-outlined">skip_previous</i>
+      <div class="play-pause">
+        <i class="material-symbols-outlined play">play_arrow</i>
+      </div>
+      <i id="next" class="material-symbols-outlined">skip_next</i>
+      <i id="more-music" class="material-symbols-outlined">queue_music</i>
+    </div>
+    
+    <div class="author">
+      Designed by <a href="https://github.com/chieunguyen2002" target="_blank">Haruto Kairi (chieunguyen2002)</a>
+    </div>
+
+    <div class="music-list">
+      <div class="header">
+        <div class="row">
+          <i class="list material-symbols-outlined">queue_music</i>
+          <span>ILLIT Playlist</span>
+        </div>
+        <i id="close" class="material-symbols-outlined">close</i>
+      </div>
+      <ul>
+        <li class="playing">
+          <div class="row">
+            <img src="https://i.pinimg.com/564x/cc/df/9e/ccdf9e4d0d6a6a5a7d3c7f1e2b8c4e37.jpg" alt="Magnetic">
+            <div class="song-info">
+              <p class="name">Magnetic</p>
+              <p class="artist">ILLIT</p>
+            </div>
+            <span class="duration">3:10</span>
+          </div>
+        </li>
+        <li>
+          <div class="row">
+            <img src="https://i.pinimg.com/564x/0e/3d/86/0e3d86a3f4d3f2d5d3b3b3b3b3b3b3b3.jpg" alt="Lucky Girl Syndrome">
+            <div class="song-info">
+              <p class="name">Lucky Girl Syndrome</p>
+              <p class="artist">ILLIT</p>
+            </div>
+            <span class="duration">3:25</span>
+          </div>
+        </li>
+        <li>
+          <div class="row">
+            <img src="https://i.pinimg.com/564x/5c/5f/8d/5c5f8d3d3d3d3d3d3d3d3d3d3d3d3d3d.jpg" alt="Midnight Fiction">
+            <div class="song-info">
+              <p class="name">Midnight Fiction</p>
+              <p class="artist">ILLIT</p>
+            </div>
+            <span class="duration">3:45</span>
+          </div>
+        </li>
+        <li>
+          <div class="row">
+            <img src="https://i.pinimg.com/564x/8d/8d/8d/8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d.jpg" alt="My World">
+            <div class="song-info">
+              <p class="name">My World</p>
+              <p class="artist">ILLIT</p>
+            </div>
+            <span class="duration">3:15</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Player elements
+      const wrapper = document.querySelector('.wrapper');
+      const playPauseBtn = document.querySelector('.play-pause');
+      const playBtn = document.querySelector('.play');
+      const prevBtn = document.getElementById('prev');
+      const nextBtn = document.getElementById('next');
+      const repeatBtn = document.getElementById('repeat-plist');
+      const moreMusicBtn = document.getElementById('more-music');
+      const closeBtn = document.getElementById('close');
+      const musicList = document.querySelector('.music-list');
+      const progressBar = document.querySelector('.progress-bar .progress');
+      const currentTimeEl = document.querySelector('.current-time');
+      const maxDurationEl = document.querySelector('.max-duration');
+      const songName = document.querySelector('.song-details .name');
+      const songArtist = document.querySelector('.song-details .artist');
+      const albumCover = document.querySelector('.img-area img');
+      const songList = document.querySelectorAll('li');
+      const visualizerBars = document.querySelectorAll('.bar');
+      
+      // Song data
+      const songs = [
+        {
+          name: "Magnetic",
+          artist: "ILLIT",
+          cover: "https://i.pinimg.com/564x/cc/df/9e/ccdf9e4d0d6a6a5a7d3c7f1e2b8c4e37.jpg",
+          duration: "3:10"
+        },
+        {
+          name: "Lucky Girl Syndrome",
+          artist: "ILLIT",
+          cover: "https://i.pinimg.com/564x/0e/3d/86/0e3d86a3f4d3f2d5d3b3b3b3b3b3b3b3.jpg",
+          duration: "3:25"
+        },
+        {
+          name: "Midnight Fiction",
+          artist: "ILLIT",
+          cover: "https://i.pinimg.com/564x/5c/5f/8d/5c5f8d3d3d3d3d3d3d3d3d3d3d3d3d3d.jpg",
+          duration: "3:45"
+        },
+        {
+          name: "My World",
+          artist: "ILLIT",
+          cover: "https://i.pinimg.com/564x/8d/8d/8d/8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d.jpg",
+          duration: "3:15"
+        }
+      ];
+      
+      let currentSong = 0;
+      let isPlaying = false;
+      let isRepeat = false;
+      let progressInterval;
+      
+      // Format time
+      function formatTime(seconds) {
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+      }
+      
+      // Load song
+      function loadSong(index) {
+        const song = songs[index];
+        songName.textContent = song.name;
+        songArtist.textContent = song.artist;
+        albumCover.src = song.cover;
+        maxDurationEl.textContent = song.duration;
+        currentTimeEl.textContent = "0:00";
+        progressBar.style.width = "0%";
+        
+        // Update active song in playlist
+        songList.forEach((item, i) => {
+          if (i === index) {
+            item.classList.add('playing');
+          } else {
+            item.classList.remove('playing');
+          }
+        });
+      }
+      
+      // Play/pause functionality
+      function playPause() {
+        isPlaying = !isPlaying;
+        
+        if (isPlaying) {
+          playBtn.textContent = "pause";
+          wrapper.classList.add('playing');
+          startProgress();
+          animateVisualizer();
+        } else {
+          playBtn.textContent = "play_arrow";
+          wrapper.classList.remove('playing');
+          clearInterval(progressInterval);
+          stopVisualizer();
+        }
+      }
+      
+      // Start progress bar
+      function startProgress() {
+        clearInterval(progressInterval);
+        
+        const duration = 190; // 3:10 in seconds
+        let currentTime = 0;
+        
+        progressInterval = setInterval(() => {
+          if (currentTime < duration) {
+            currentTime += 1;
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            currentTimeEl.textContent = formatTime(currentTime);
+          } else {
+            clearInterval(progressInterval);
+            if (isRepeat) {
+              playNext();
+            } else {
+              isPlaying = false;
+              playBtn.textContent = "play_arrow";
+              wrapper.classList.remove('playing');
+            }
+          }
+        }, 1000);
+      }
+      
+      // Animate visualizer
+      function animateVisualizer() {
+        visualizerBars.forEach(bar => {
+          bar.style.animationPlayState = 'running';
+        });
+      }
+      
+      // Stop visualizer
+      function stopVisualizer() {
+        visualizerBars.forEach(bar => {
+          bar.style.animationPlayState = 'paused';
+        });
+      }
+      
+      // Play next song
+      function playNext() {
+        currentSong = (currentSong + 1) % songs.length;
+        loadSong(currentSong);
+        if (isPlaying) {
+          startProgress();
+        }
+      }
+      
+      // Play previous song
+      function playPrev() {
+        currentSong = (currentSong - 1 + songs.length) % songs.length;
+        loadSong(currentSong);
+        if (isPlaying) {
+          startProgress();
+        }
+      }
+      
+      // Toggle repeat
+      function toggleRepeat() {
+        isRepeat = !isRepeat;
+        repeatBtn.classList.toggle('active', isRepeat);
+      }
+      
+      // Toggle playlist
+      function togglePlaylist() {
+        musicList.classList.toggle('show');
+      }
+      
+      // Select song from playlist
+      function selectSong(index) {
+        currentSong = index;
+        loadSong(currentSong);
+        if (!isPlaying) {
+          playPause();
+        } else {
+          startProgress();
+        }
+        togglePlaylist();
+      }
+      
+      // Initialize
+      loadSong(currentSong);
+      
+      // Event listeners
+      playPauseBtn.addEventListener('click', playPause);
+      nextBtn.addEventListener('click', playNext);
+      prevBtn.addEventListener('click', playPrev);
+      repeatBtn.addEventListener('click', toggleRepeat);
+      moreMusicBtn.addEventListener('click', togglePlaylist);
+      closeBtn.addEventListener('click', togglePlaylist);
+      
+      songList.forEach((item, index) => {
+        item.addEventListener('click', () => selectSong(index));
+      });
+      
+      // Progress bar click
+      const progressContainer = document.querySelector('.progress-bar');
+      progressContainer.addEventListener('click', (e) => {
+        const width = progressContainer.clientWidth;
+        const clickX = e.offsetX;
+        const duration = 190;
+        const newTime = (clickX / width) * duration;
+        
+        if (isPlaying) {
+          clearInterval(progressInterval);
+          startProgress();
+        }
+        
+        const progressPercent = (newTime / duration) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+        currentTimeEl.textContent = formatTime(newTime);
+      });
+    });
+  </script>
 </body>
 </html>
