@@ -1,273 +1,307 @@
+<DOCUMENT filename="style.css">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,600&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-*::before,
-*::after {
-  padding: 0;
-  margin: 0;
-}
-/* Keke có font Poppins vô xịn hẵn mn hen :D */
 
-/* Ở đây mình sẽ gán màu cho các biến, để code css mình dùng sẽ clean hơn, đỡ phải nhớ mã màu :D */
-:root {
-  --pink: #ff74a4;
-  --violet: #9f6ea3;
-  --lightback: #515c6f;
-  --white: #fff;
-  --darkwhite: #cecaca;
-  --pinkshadow: #ffcbdd;
-  --lightbshadow: rgba(0, 0, 0, 0.15);
-}
 body {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #525d70;
+  background: linear-gradient(135deg, #1f1f27, #525d70);
+  padding: 20px;
 }
+
 .wrapper {
-  width: 380px;
-  padding: 25px 30px;
-  overflow: hidden;
-  position: relative;
-  border-radius: 15px;
-  background: #1f1f27;
-  box-shadow: 0px 6px 15px var(--lightbshadow);
+  width: 100%;
+  max-width: 400px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  margin-bottom: 40px;
 }
-.wrapper i {
-  cursor: pointer;
-}
-.top-bar,
-.progress-bar .song-timer,
-.controls,
-.music-list .header,
-.music-list ul li {
+
+.top-bar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  margin-bottom: 20px;
 }
-/* sức mạnh của Flexbox :D Các bạn nào chưa xem vid mình ứng dụng Flexbox thì xem ở bên trên góc phải màn hình nhé :3 */
 
 .top-bar i {
-  font-size: 30px;
-  color: var(--lightback);
+  font-size: 24px;
+  cursor: pointer;
 }
-.top-bar i:first-child {
-  margin-left: -7px;
-}
+
 .top-bar span {
   font-size: 18px;
-  margin-left: -3px;
-  color: var(--white);
 }
+
 .img-area {
   width: 100%;
-  height: 256px;
-  overflow: hidden;
-  margin-top: 25px;
+  height: 250px;
   border-radius: 15px;
-  box-shadow: 0px 6px 12px var(--lightbshadow);
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
+
 .img-area img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
+
+.wrapper.paused .img-area img {
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .song-details {
   text-align: center;
-  margin: 30px 0;
-}
-.song-details p {
-  color: var(--white);
-}
-.song-details .name {
-  font-size: 21px;
+  margin: 20px 0;
+  color: #fff;
 }
 
+.song-details .name {
+  font-size: 22px;
+  font-weight: 600;
+}
 
 .song-details .artist {
-  font-size: 18px;
-  opacity: 0.9;
-  line-height: 35px;
+  font-size: 16px;
+  opacity: 0.8;
 }
-
 
 .progress-area {
   height: 6px;
-  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50px;
-  background: #f0f0f0;
   cursor: pointer;
+  margin: 20px 0;
 }
-.progress-area .progress-bar {
-  height: inherit;
+
+.progress-bar {
+  height: 100%;
   width: 0%;
+  background: linear-gradient(90deg, #ff74a4, #9f6ea3);
+  border-radius: 50px;
   position: relative;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--pink) 0%, var(--violet) 100%);
 }
+
 .progress-bar::before {
   content: "";
   position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
   height: 12px;
   width: 12px;
   border-radius: 50%;
-  top: 50%;
-  right: -5px;
-  z-index: 2;
+  background: #ff74a4;
   opacity: 0;
-  pointer-events: none;
-  transform: translateY(-50%);
-  background: inherit;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s;
 }
+
 .progress-area:hover .progress-bar::before {
   opacity: 1;
-  pointer-events: none;
-}
-.progress-area .song-timer {
-  margin-top: 2px;
-}
-.song-timer span {
-  margin-top: 10px;
-  font-size: 13px;
-  color: var(--lightback);
 }
 
-
+.song-timer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #ddd;
+  margin-top: 5px;
+}
 
 .controls {
-  margin: 40px 0 5px 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 0;
 }
+
 .controls i {
   font-size: 28px;
-  user-select: none;
-  background: linear-gradient(var(--pink) 0%, var(--violet) 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.controls i:nth-child(2),
-.controls i:nth-child(4) {
-  font-size: 43px;
-}
-.controls #next {
-  margin-left: -13px;
-}
-.controls .play-pause {
-  height: 54px;
-  width: 54px;
-  display: flex;
+  color: #fff;
   cursor: pointer;
+  transition: color 0.3s;
+}
+
+.controls i:hover {
+  color: #ff74a4;
+}
+
+.play-pause {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #ff74a4, #9f6ea3);
+  border-radius: 50%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: linear-gradient(var(--white) 0%, var(--darkwhite) 100%);
-  box-shadow: 0px 0px 5px var(--pink);
+  box-shadow: 0 5px 15px rgba(255, 116, 164, 0.5);
 }
-.play-pause::before {
-  position: absolute;
-  content: "";
-  height: 43px;
-  width: 43px;
-  border-radius: inherit;
-  background: linear-gradient(var(--pink) 0%, var(--violet) 100%);
-}
+
 .play-pause i {
-  height: 43px;
-  width: 43px;
-  line-height: 43px;
-  text-align: center;
-  background: inherit;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  position: absolute;
+  font-size: 32px;
+  color: #fff;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.volume-control i {
+  font-size: 24px;
+}
+
+.volume-control input {
+  width: 80px;
+  accent-color: #ff74a4;
 }
 
 .music-list {
   position: absolute;
-  background: var(--white);
-  width: 100%;
+  bottom: -100%;
   left: 0;
-  bottom: -55%;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 5;
-  padding: 15px 30px;
-  border-radius: 15px;
-  box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.15s ease-out;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+  transition: bottom 0.3s ease;
+  color: #fff;
 }
-/* Này mình CSS sẵn henn, do lát có thêm Js thì các bạn mới thấy rõ đc phần này :D 
-Này là cái nút mà bấm vô sẽ hiện list nhạc í  */
+
 .music-list.show {
   bottom: 0;
-  opacity: 1;
-  pointer-events: auto;
 }
-.header .row {
+
+.music-list .header {
   display: flex;
-  align-items: center;
-  font-size: 19px;
-  color: var(--lightback);
-    flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
-.header .row i {
-  cursor: default;
-}
-.header .row span {
-  margin-left: 5px;
-}
-.header #close {
-  font-size: 22px;
-  color: var(--lightback);
-}
+
 .music-list ul {
-  margin: 10px 0;
-  max-height: 260px;
-  overflow: auto;
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
+.music-list ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: background 0.2s;
+}
 
+.music-list ul li:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
 
-  .separator {
-    margin: 0 5px;
-    color: #a29ebd;
+.music-list ul li.playing {
+  color: #ff74a4;
+}
+
+.group-info {
+  width: 100%;
+  max-width: 800px;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.group-info h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.group-info p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.members {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.member {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  width: 150px;
+}
+
+.member img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.member p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+footer {
+  margin-top: 20px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .wrapper {
+    max-width: 100%;
+    padding: 15px;
   }
 
+  .img-area {
+    height: 200px;
+  }
 
+  .controls {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 
-/* Do mình làm quen rùi nên nãy giờ mình CSS ước chừng thui chứ khum chính xác đâu nhe :D lát có j cần căn chỉnh thì lát mình quay lại đây he :3 */
-.music-list ul::-webkit-scrollbar {
-  width: 0px;
+  .volume-control {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .members {
+    flex-direction: column;
+    align-items: center;
+  }
 }
-.music-list ul li {
-  list-style: none;
-  display: flex;
-  cursor: pointer;
-  padding-bottom: 10px;
-  margin-bottom: 5px;
-  color: var(--lightback);
-  border-bottom: 1px solid #e5e5e5;
-}
-.music-list ul li:last-child {
-  border-bottom: 0px;
-}
-.music-list ul li .row span {
-  font-size: 17px;
-}
-.music-list ul li .row p {
-  opacity: 0.9;
-}
-ul li .audio-duration {
-  font-size: 16px;
-}
-ul li.playing {
-  pointer-events: none;
-  color: var(--violet);
-}
+</DOCUMENT>
