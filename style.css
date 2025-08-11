@@ -98,7 +98,7 @@ body {
   height: 6px;
   width: 100%;
   border-radius: 50px;
-  background: #2c2c3a;
+  background: #f0f0f0;
   cursor: pointer;
 
    opacity: 1;
@@ -109,7 +109,7 @@ body {
 .progress-area .progress-bar {
   height: inherit;
   width: 0%;
-  position: absolute; /* Thay đổi từ relative sang absolute */
+  position: relative; /* Thay đổi từ relative sang absolute */
    top: 0;
       left: 0;
   
@@ -135,21 +135,20 @@ body {
 }
 .progress-area:hover .progress-bar::before {
   opacity: 1;
-  
+   pointer-events: none;
  /* pointer-events: none; */
   
 }
 .progress-area .song-timer {
 
-   margin-top: 10px; /* Tăng khoảng cách */
+   margin-top: 2px; /* Tăng khoảng cách */
   
-      position: relative;
-      z-index: 1;
+/*      position: relative;
+      z-index: 1; */
   
 }
 .song-timer span {
-/*  margin-top: 10px; */
-  
+  margin-top: 10px;
   font-size: 13px;
   color: var(--lightback);
 }
