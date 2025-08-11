@@ -87,7 +87,7 @@ mainAudio.addEventListener("timeupdate", (e)=>{
   progressBar.style.width = `${progressWidth}%`;
 
   let musicCurrentTime = wrapper.querySelector(".current-time"),
-  musicDuartion = wrapper.querySelector(".max-duration");
+  musicDuration = wrapper.querySelector(".max-duration");
   mainAudio.addEventListener("loadeddata", ()=>{
    
     let mainAdDuration = mainAudio.duration;
@@ -96,7 +96,7 @@ mainAudio.addEventListener("timeupdate", (e)=>{
     if(totalSec < 10){ 
       totalSec = `0${totalSec}`;
     }
-    musicDuartion.innerText = `${totalMin}:${totalSec}`;
+    musicDuration.innerText = `${totalMin}:${totalSec}`;
   });
   
   let currentMin = Math.floor(currentTime / 60);
@@ -179,14 +179,14 @@ for (let i = 0; i < allMusic.length; i++) {
   let liTag = `<li li-index="${i + 1}">
                 <div class="row">
                   <span>${allMusic[i].name}</span>
-                  <p>${allMusic[i].artist}</p>
+                 
                 </div>
-                <span id="${allMusic[i].src}" class="audio-duration">3:40</span>
+                <span id="${allMusic[i].src}" class="audio-duration"></span>
                 <audio class="${allMusic[i].src}" src="songs/${allMusic[i].src}.mp3"></audio>
               </li>`;
   ulTag.insertAdjacentHTML("beforeend", liTag); 
 
-  let liAudioDuartionTag = ulTag.querySelector(`#${allMusic[i].src}`);
+  let liAudioDurationTag = ulTag.querySelector(`#${allMusic[i].src}`);
   let liAudioTag = ulTag.querySelector(`.${allMusic[i].src}`);
   liAudioTag.addEventListener("loadeddata", ()=>{
     let duration = liAudioTag.duration;
@@ -195,8 +195,8 @@ for (let i = 0; i < allMusic.length; i++) {
     if(totalSec < 10){ 
       totalSec = `0${totalSec}`;
     };
-    liAudioDuartionTag.innerText = `${totalMin}:${totalSec}`; 
-    liAudioDuartionTag.setAttribute("t-duration", `${totalMin}:${totalSec}`); 
+    liAudioDurationTag.innerText = `${totalMin}:${totalSec}`; 
+    liAudioDurationTag.setAttribute("t-duration", `${totalMin}:${totalSec}`); 
   });
 }
 

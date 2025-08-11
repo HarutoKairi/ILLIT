@@ -87,6 +87,8 @@ body {
 .song-details .name {
   font-size: 21px;
 }
+
+
 .song-details .artist {
   font-size: 18px;
   opacity: 0.9;
@@ -208,6 +210,7 @@ Này là cái nút mà bấm vô sẽ hiện list nhạc í  */
   align-items: center;
   font-size: 19px;
   color: var(--lightback);
+    flex-wrap: wrap;
 }
 .header .row i {
   cursor: default;
@@ -224,6 +227,15 @@ Này là cái nút mà bấm vô sẽ hiện list nhạc í  */
   max-height: 260px;
   overflow: auto;
 }
+
+
+
+  .separator {
+    margin: 0 5px;
+    color: #a29ebd;
+  }
+
+
 
 /* Do mình làm quen rùi nên nãy giờ mình CSS ước chừng thui chứ khum chính xác đâu nhe :D lát có j cần căn chỉnh thì lát mình quay lại đây he :3 */
 .music-list ul::-webkit-scrollbar {
