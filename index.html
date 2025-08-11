@@ -635,6 +635,7 @@
               autoplay = false;
               autoplayBtn.classList.remove('active');
               clearTimeout(autoplayTimer);
+              console.log("Autoplay stopped at end of playlist.");
               return;
             } else {
               newIndex = 0;
@@ -656,50 +657,53 @@
       updatePlayer();
     }
 
+    // Check for missing elements
     if (!currentImg || !currentName || !currentArtist || !currentIframe || !shuffleBtn || !prevBtn || !nextBtn || !repeatBtn || !autoplayBtn) {
       console.error("Một hoặc nhiều phần tử không tồn tại. Kiểm tra ID trong HTML.");
-      return;
+      // Instead of return, skip initialization but allow other scripts to run
+    } else {
+      // Initialize event listeners only if all elements are present
+      shuffleBtn.addEventListener('click', () => {
+        shuffle = !shuffle;
+        shuffleBtn.classList.toggle('active');
+        console.log(`Shuffle: ${shuffle}`);
+      });
+
+      repeatBtn.addEventListener('click', () => {
+        const repeatIcon = repeatBtn.querySelector('i');
+        if (repeat === 'off') {
+          repeat = 'all';
+          repeatIcon.textContent = 'repeat';
+          repeatBtn.classList.add('active');
+        } else if (repeat === 'all') {
+          repeat = 'one';
+          repeatIcon.textContent = 'repeat_one';
+        } else {
+          repeat = 'off';
+          repeatIcon.textContent = 'repeat';
+          repeatBtn.classList.remove('active');
+        }
+        console.log(`Repeat: ${repeat}`);
+      });
+
+      autoplayBtn.addEventListener('click', () => {
+        autoplay = !autoplay;
+        autoplayBtn.classList.toggle('active');
+        if (autoplay) {
+          clearTimeout(autoplayTimer);
+          autoplayTimer = setTimeout(() => playNext(true), songs[currentIndex].duration * 1000);
+        } else {
+          clearTimeout(autoplayTimer);
+        }
+        console.log(`Autoplay: ${autoplay}`);
+      });
+
+      prevBtn.addEventListener('click', playPrev);
+      nextBtn.addEventListener('click', () => playNext(false));
+
+      // Initialize player with the first song
+      updatePlayer();
     }
-
-    shuffleBtn.addEventListener('click', () => {
-      shuffle = !shuffle;
-      shuffleBtn.classList.toggle('active');
-      console.log(`Shuffle: ${shuffle}`);
-    });
-
-    repeatBtn.addEventListener('click', () => {
-      const repeatIcon = repeatBtn.querySelector('i');
-      if (repeat === 'off') {
-        repeat = 'all';
-        repeatIcon.textContent = 'repeat';
-        repeatBtn.classList.add('active');
-      } else if (repeat === 'all') {
-        repeat = 'one';
-        repeatIcon.textContent = 'repeat_one';
-      } else {
-        repeat = 'off';
-        repeatIcon.textContent = 'repeat';
-        repeatBtn.classList.remove('active');
-      }
-      console.log(`Repeat: ${repeat}`);
-    });
-
-    autoplayBtn.addEventListener('click', () => {
-      autoplay = !autoplay;
-      autoplayBtn.classList.toggle('active');
-      if (autoplay) {
-        clearTimeout(autoplayTimer);
-        autoplayTimer = setTimeout(() => playNext(true), songs[currentIndex].duration * 1000);
-      } else {
-        clearTimeout(autoplayTimer);
-      }
-      console.log(`Autoplay: ${autoplay}`);
-    });
-
-    prevBtn.addEventListener('click', playPrev);
-    nextBtn.addEventListener('click', () => playNext(false));
-
-    updatePlayer();
   </script>
 </body>
 </html>
