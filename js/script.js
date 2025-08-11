@@ -73,45 +73,40 @@ nextBtn.addEventListener("click", ()=>{
 mainAudio.addEventListener("timeupdate", (e)=>{
   const currentTime = e.target.currentTime; 
   const duration = e.target.duration; 
+  let progressWidth = (currentTime / duration) * 100;
+  progressBar.style.width = `${progressWidth}%`;
 
-  // Cập nhật thanh progress (kiểm tra duration hợp lệ)
-  if (duration > 0 && !isNaN(duration)) {
-    const progressWidth = (currentTime / duration) * 100;
-    progressBar.style.width = `${progressWidth}%`;
-  }
-
-  // Cập nhật thời gian hiện tại
-  let musicCurrentTime = wrapper.querySelector(".current-time");
+  let musicCurrentTime = wrapper.querySelector(".current-time"),
+  musicDuartion = wrapper.querySelector(".max-duration");
+  mainAudio.addEventListener("loadeddata", ()=>{
+   
+    let mainAdDuration = mainAudio.duration;
+    let totalMin = Math.floor(mainAdDuration / 60);
+    let totalSec = Math.floor(mainAdDuration % 60);
+    if(totalSec < 10){ 
+      totalSec = `0${totalSec}`;
+    }
+    musicDuartion.innerText = `${totalMin}:${totalSec}`;
+  });
+  
   let currentMin = Math.floor(currentTime / 60);
   let currentSec = Math.floor(currentTime % 60);
-  if (currentSec < 10) currentSec = `0${currentSec}`;
+  if(currentSec < 10){ 
+    currentSec = `0${currentSec}`;
+  }
   musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
 });
 
-mainAudio.addEventListener("loadeddata", () => {
-  let musicDuration = wrapper.querySelector(".max-duration");
-  const duration = mainAudio.duration;
-  
-  if (duration > 0) {
-    let totalMin = Math.floor(duration / 60);
-    let totalSec = Math.floor(duration % 60);
-    if (totalSec < 10) totalSec = `0${totalSec}`;
-    musicDuration.innerText = `${totalMin}:${totalSec}`;
-  }
-});
 
 // SỬA LỖI CLICK TRÊN PROGRESS AREA
 progressArea.addEventListener("click", (e)=>{
-  const progressWidthVal = progressArea.clientWidth; 
-  const clickedOffsetX = e.offsetX; 
-  const songDuration = mainAudio.duration; 
+  let progressWidth = progressArea.clientWidth; 
+  let clickedOffsetX = e.offsetX; 
+  let songDuration = mainAudio.duration; 
   
-  // Kiểm tra duration hợp lệ trước khi tính toán
-  if (songDuration > 0 && !isNaN(songDuration)) {
-    mainAudio.currentTime = (clickedOffsetX / progressWidthVal) * songDuration;
-    playMusic(); 
-    playingSong();
-  }
+  mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+  playMusic(); 
+  playingSong();
 });
 
 // PHẦN CÒN LẠI GIỮ NGUYÊN
