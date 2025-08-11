@@ -159,24 +159,29 @@
     .player-controls {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
       margin-top: 20px;
     }
     
     .player-controls button {
-      background: linear-gradient(135deg, #ff6ec4, #7873f5);
+      background: none;
       border: none;
-      color: #fff;
-      font-size: 1.2rem;
-      padding: 10px 20px;
-      border-radius: 30px;
       cursor: pointer;
+      padding: 5px;
       transition: all 0.3s ease;
     }
     
     .player-controls button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(120, 115, 245, 0.4);
+      transform: scale(1.1);
+    }
+    
+    .player-controls i {
+      font-size: 28px;
+      color: #d0cde7;
+    }
+    
+    .player-controls .active i {
+      color: #ff6ec4;
     }
     
     /* Info Tab */
@@ -355,8 +360,11 @@
       }
       
       .player-controls button {
-        padding: 8px 15px;
-        font-size: 1rem;
+        padding: 3px;
+      }
+      
+      .player-controls i {
+        font-size: 24px;
       }
     }
   </style>
@@ -384,8 +392,11 @@
         <p id="current-artist"></p>
         <iframe id="current-iframe" style="border-radius:12px" src="" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         <div class="player-controls">
-          <button id="prev-btn">Bài trước</button>
-          <button id="next-btn">Bài sau</button>
+          <button id="shuffle-btn" title="Phát ngẫu nhiên"><i class="material-icons">shuffle</i></button>
+          <button id="prev-btn" title="Bài trước"><i class="material-icons">skip_previous</i></button>
+          <button id="next-btn" title="Bài sau"><i class="material-icons">skip_next</i></button>
+          <button id="repeat-btn" title="Phát lặp lại"><i class="material-icons">repeat</i></button>
+          <button id="autoplay-btn" title="Tự động phát bài tiếp theo"><i class="material-icons">autorenew</i></button>
         </div>
       </div>
     </div>
@@ -579,45 +590,117 @@
     });
   </script>
   <script>
-    // Danh sách bài hát với embed URLs từ Spotify
+    // Danh sách bài hát với embed URLs từ Spotify và duration (giây)
     const songs = [
-      { name: "Magnetic", artist: "ILLIT", img: "music-1.jpg", url: "https://open.spotify.com/embed/track/1aKvZDoLGkNMxoRYgkckZG?utm_source=generator&theme=0" },
-      { name: "Lucky Girl Syndrome", artist: "ILLIT", img: "music-2.jpg", url: "https://open.spotify.com/embed/track/2kIUILBPlz4exX9xIFS275?utm_source=generator&theme=0" },
-      { name: "Midnight Fiction", artist: "ILLIT", img: "music-3.jpg", url: "https://open.spotify.com/embed/track/6QqrxJe1iQxwLY6he6FLFo?utm_source=generator&theme=0" },
-      { name: "My World", artist: "ILLIT", img: "music-4.jpg", url: "https://open.spotify.com/embed/track/2Xiaplc23BureS4EDeE8xa?utm_source=generator&theme=0" },
-      { name: "Tick Tack", artist: "ILLIT", img: "music-5.jpg", url: "https://open.spotify.com/embed/track/0znsc67nMhP4X9hjhvoyeP?utm_source=generator&theme=0" },
-      { name: "Little Monster", artist: "ILLIT", img: "music-6.jpg", url: "https://open.spotify.com/embed/track/5MaPzLp2vwSqu8YyUZ4zR7?utm_source=generator&theme=0" },
-      { name: "Billyeoon Goyangi (Do the Dance)", artist: "ILLIT", img: "music-7.jpg", url: "https://open.spotify.com/embed/track/4p0uVFAXKUISu8yp9gNtWE?utm_source=generator&theme=0" },
-      { name: "Jellyous", artist: "ILLIT", img: "music-8.jpg", url: "https://open.spotify.com/embed/track/0wFU2pYHZi45Ws1VD6aSJX?utm_source=generator&theme=0" }
+      { name: "Magnetic", artist: "ILLIT", img: "music-1.jpg", url: "https://open.spotify.com/embed/track/1aKvZDoLGkNMxoRYgkckZG?utm_source=generator&theme=0", duration: 160 },
+      { name: "Lucky Girl Syndrome", artist: "ILLIT", img: "music-2.jpg", url: "https://open.spotify.com/embed/track/2kIUILBPlz4exX9xIFS275?utm_source=generator&theme=0", duration: 145 },
+      { name: "Midnight Fiction", artist: "ILLIT", img: "music-3.jpg", url: "https://open.spotify.com/embed/track/6QqrxJe1iQxwLY6he6FLFo?utm_source=generator&theme=0", duration: 168 },
+      { name: "My World", artist: "ILLIT", img: "music-4.jpg", url: "https://open.spotify.com/embed/track/2Xiaplc23BureS4EDeE8xa?utm_source=generator&theme=0", duration: 107 },
+      { name: "Tick Tack", artist: "ILLIT", img: "music-5.jpg", url: "https://open.spotify.com/embed/track/0znsc67nMhP4X9hjhvoyeP?utm_source=generator&theme=0", duration: 136 },
+      { name: "Little Monster", artist: "ILLIT", img: "music-6.jpg", url: "https://open.spotify.com/embed/track/5MaPzLp2vwSqu8YyUZ4zR7?utm_source=generator&theme=0", duration: 184 },
+      { name: "Billyeoon Goyangi (Do the Dance)", artist: "ILLIT", img: "music-7.jpg", url: "https://open.spotify.com/embed/track/4p0uVFAXKUISu8yp9gNtWE?utm_source=generator&theme=0", duration: 175 },
+      { name: "Jellyous", artist: "ILLIT", img: "music-8.jpg", url: "https://open.spotify.com/embed/track/0wFU2pYHZi45Ws1VD6aSJX?utm_source=generator&theme=0", duration: 178 }
     ];
 
     let currentIndex = 0;
+    let shuffle = false;
+    let repeat = 'off'; // 'off', 'all', 'one'
+    let autoplay = false;
+    let autoplayTimer;
 
     const currentImg = document.getElementById('current-img');
     const currentName = document.getElementById('current-name');
     const currentArtist = document.getElementById('current-artist');
     const currentIframe = document.getElementById('current-iframe');
+    const shuffleBtn = document.getElementById('shuffle-btn');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
+    const repeatBtn = document.getElementById('repeat-btn');
+    const autoplayBtn = document.getElementById('autoplay-btn');
 
     function updatePlayer() {
       const song = songs[currentIndex];
-      currentImg.src = `images/${song.img}`; // Giả sử hình ảnh ở thư mục images
+      currentImg.src = `images/${song.img}`;
       currentImg.alt = song.name;
       currentName.textContent = song.name;
       currentArtist.textContent = song.artist;
       currentIframe.src = song.url;
+
+      if (autoplay) {
+        clearTimeout(autoplayTimer);
+        autoplayTimer = setTimeout(() => playNext(true), song.duration * 1000);
+      }
     }
 
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+    function playNext(auto = false) {
+      let newIndex = currentIndex;
+
+      if (repeat === 'one') {
+        newIndex = currentIndex;
+      } else {
+        if (shuffle) {
+          newIndex = Math.floor(Math.random() * songs.length);
+        } else {
+          newIndex = currentIndex + 1;
+          if (newIndex >= songs.length) {
+            if (repeat === 'all') {
+              newIndex = 0;
+            } else if (repeat === 'off' && auto) {
+              return; // Dừng nếu repeat off và auto tại bài cuối
+            } else {
+              newIndex = 0;
+            }
+          }
+        }
+      }
+
+      currentIndex = newIndex;
       updatePlayer();
+    }
+
+    function playPrev() {
+      let newIndex = currentIndex - 1;
+      if (newIndex < 0) {
+        newIndex = songs.length - 1;
+      }
+      currentIndex = newIndex;
+      updatePlayer();
+    }
+
+    shuffleBtn.addEventListener('click', () => {
+      shuffle = !shuffle;
+      shuffleBtn.classList.toggle('active');
     });
 
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % songs.length;
-      updatePlayer();
+    repeatBtn.addEventListener('click', () => {
+      const repeatIcon = repeatBtn.querySelector('i');
+      if (repeat === 'off') {
+        repeat = 'all';
+        repeatIcon.textContent = 'repeat';
+        repeatBtn.classList.add('active');
+      } else if (repeat === 'all') {
+        repeat = 'one';
+        repeatIcon.textContent = 'repeat_one';
+      } else {
+        repeat = 'off';
+        repeatIcon.textContent = 'repeat';
+        repeatBtn.classList.remove('active');
+      }
     });
+
+    autoplayBtn.addEventListener('click', () => {
+      autoplay = !autoplay;
+      autoplayBtn.classList.toggle('active');
+      if (autoplay) {
+        clearTimeout(autoplayTimer);
+        autoplayTimer = setTimeout(() => playNext(true), songs[currentIndex].duration * 1000);
+      } else {
+        clearTimeout(autoplayTimer);
+      }
+    });
+
+    prevBtn.addEventListener('click', playPrev);
+    nextBtn.addEventListener('click', () => playNext(false));
 
     // Khởi tạo player với bài hát đầu tiên
     updatePlayer();
