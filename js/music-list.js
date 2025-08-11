@@ -3,7 +3,10 @@ let allMusic = [
     name: "Magnetic",
     artist: "ILLIT",
     img: "music-1",
-    src: "music-1"
+    src: "music-1",
+spotifyEmbedUrl: "https://open.spotify.com/embed/track/1aKvZDoLGkNMxoRYgkckZG?utm_source=generator&theme=0"
+    
+    
   },
   {
     name: "Lucky Girl Syndrome",
