@@ -27,13 +27,11 @@ function loadMusic(indexNumb){
   mainAudio.src = `songs/${allMusic[indexNumb - 1].src}.mp3`;
 }
 
-
 function playMusic(){
   wrapper.classList.add("paused");
   playPauseBtn.querySelector("i").innerText = "pause";
   mainAudio.play();
 }
-
 
 function pauseMusic(){
   wrapper.classList.remove("paused");
@@ -41,66 +39,48 @@ function pauseMusic(){
   mainAudio.pause();
 }
 
-
 function prevMusic(){
   musicIndex--; 
- 
   musicIndex < 1 ? musicIndex = allMusic.length : musicIndex = musicIndex;
   loadMusic(musicIndex);
   playMusic();
   playingSong(); 
 }
 
-
 function nextMusic(){
   musicIndex++; 
-  
   musicIndex > allMusic.length ? musicIndex = 1 : musicIndex = musicIndex;
   loadMusic(musicIndex);
   playMusic();
   playingSong(); 
 }
 
-
 playPauseBtn.addEventListener("click", ()=>{
   const isMusicPlay = wrapper.classList.contains("paused");
-  
   isMusicPlay ? pauseMusic() : playMusic();
   playingSong();
 });
-
 
 prevBtn.addEventListener("click", ()=>{
   prevMusic();
 });
 
-
 nextBtn.addEventListener("click", ()=>{
   nextMusic();
 });
 
-
+// SỬA LỖI PHẦN PROGRESS BAR
 mainAudio.addEventListener("timeupdate", (e)=>{
-
   const currentTime = e.target.currentTime; 
   const duration = e.target.duration; 
 
-    // Cập nhật thanh progress (kiểm tra duration > 0)
-  if (duration > 0) {
+  // Cập nhật thanh progress (kiểm tra duration hợp lệ)
+  if (duration > 0 && !isNaN(duration)) {
     const progressWidth = (currentTime / duration) * 100;
     progressBar.style.width = `${progressWidth}%`;
   }
 
-  
-
-  
-  let progressWidth = (currentTime / duration) * 100;
-  progressBar.style.width = `${progressWidth}%`;
-
-  let musicCurrentTime = wrapper.querySelector(".current-time"),
-  musicDuration = wrapper.querySelector(".max-duration");
-
-   // Cập nhật thời gian hiện tại
+  // Cập nhật thời gian hiện tại
   let musicCurrentTime = wrapper.querySelector(".current-time");
   let currentMin = Math.floor(currentTime / 60);
   let currentSec = Math.floor(currentTime % 60);
@@ -108,26 +88,6 @@ mainAudio.addEventListener("timeupdate", (e)=>{
   musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
 });
 
-
-/*  
-  mainAudio.addEventListener("loadeddata", ()=>{
-    let mainAdDuration = mainAudio.duration;
-    let totalMin = Math.floor(mainAdDuration / 60);
-    let totalSec = Math.floor(mainAdDuration % 60);
-    if(totalSec < 10){ 
-      totalSec = `0${totalSec}`;
-    }
-    musicDuration.innerText = `${totalMin}:${totalSec}`;
-  }); 
-  
-  let currentMin = Math.floor(currentTime / 60);
-  let currentSec = Math.floor(currentTime % 60);
-  if(currentSec < 10){ 
-    currentSec = `0${currentSec}`;
-  }
-  musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
-});
-*/
 mainAudio.addEventListener("loadeddata", () => {
   let musicDuration = wrapper.querySelector(".max-duration");
   const duration = mainAudio.duration;
@@ -140,20 +100,21 @@ mainAudio.addEventListener("loadeddata", () => {
   }
 });
 
-
-
-
+// SỬA LỖI CLICK TRÊN PROGRESS AREA
 progressArea.addEventListener("click", (e)=>{
-  const progressWidth = progressArea.clientWidth; 
+  const progressWidthVal = progressArea.clientWidth; 
   const clickedOffsetX = e.offsetX; 
   const songDuration = mainAudio.duration; 
   
-  mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-  playMusic(); 
-  playingSong();
+  // Kiểm tra duration hợp lệ trước khi tính toán
+  if (songDuration > 0 && !isNaN(songDuration)) {
+    mainAudio.currentTime = (clickedOffsetX / progressWidthVal) * songDuration;
+    playMusic(); 
+    playingSong();
+  }
 });
 
-
+// PHẦN CÒN LẠI GIỮ NGUYÊN
 const repeatBtn = wrapper.querySelector("#repeat-plist");
 repeatBtn.addEventListener("click", ()=>{
   let getText = repeatBtn.innerText; 
@@ -173,9 +134,7 @@ repeatBtn.addEventListener("click", ()=>{
   }
 });
 
-
 mainAudio.addEventListener("ended", ()=>{
-  
   let getText = repeatBtn.innerText; 
   switch(getText){
     case "repeat":
@@ -199,7 +158,6 @@ mainAudio.addEventListener("ended", ()=>{
   }
 });
 
-
 moreMusicBtn.addEventListener("click", ()=>{
   musicList.classList.toggle("show");
 });
@@ -210,11 +168,9 @@ closemoreMusic.addEventListener("click", ()=>{
 const ulTag = wrapper.querySelector("ul");
 
 for (let i = 0; i < allMusic.length; i++) {
- 
   let liTag = `<li li-index="${i + 1}">
                 <div class="row">
                   <span>${allMusic[i].name}</span>
-                 
                 </div>
                 <span id="${allMusic[i].src}" class="audio-duration"></span>
                 <audio class="${allMusic[i].src}" src="songs/${allMusic[i].src}.mp3"></audio>
@@ -235,7 +191,6 @@ for (let i = 0; i < allMusic.length; i++) {
   });
 }
 
-
 function playingSong(){
   const allLiTag = ulTag.querySelectorAll("li");
   
@@ -247,7 +202,6 @@ function playingSong(){
       let adDuration = audioTag.getAttribute("t-duration");
       audioTag.innerText = adDuration;
     }
-
     
     if(allLiTag[j].getAttribute("li-index") == musicIndex){
       allLiTag[j].classList.add("playing");
@@ -257,7 +211,6 @@ function playingSong(){
     allLiTag[j].setAttribute("onclick", "clicked(this)");
   }
 }
-
 
 function clicked(element){
   let getLiIndex = element.getAttribute("li-index");
