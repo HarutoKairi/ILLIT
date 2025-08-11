@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ILLIT - Music Player</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="shortcut icon" href="./logo.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="./logo.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -23,7 +23,6 @@
       position: relative;
     }
     
-    /* Hiệu ứng hạt */
     #particles-js {
       position: fixed;
       width: 100%;
@@ -45,8 +44,6 @@
       margin-bottom: 30px;
       position: relative;
     }
-
-    
     
     .logo {
       font-family: 'Montserrat', sans-serif;
@@ -65,7 +62,6 @@
       margin-bottom: 30px;
     }
     
-    /* Tab navigation */
     .tabs {
       display: flex;
       justify-content: center;
@@ -124,7 +120,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Player Tab - Single Player with Prev/Next */
     .spotify-player {
       background: rgba(30, 20, 60, 0.7);
       backdrop-filter: blur(10px);
@@ -184,7 +179,6 @@
       color: #ff6ec4;
     }
     
-    /* Info Tab */
     .info-tab {
       background: rgba(30, 20, 60, 0.7);
       backdrop-filter: blur(10px);
@@ -321,7 +315,6 @@
       margin-bottom: 10px;
     }
     
-    /* Responsive */
     @media (max-width: 768px) {
       .logo {
         font-size: 2.5rem;
@@ -370,7 +363,6 @@
   </style>
 </head>
 <body>
-  <!-- Hiệu ứng hạt -->
   <div id="particles-js"></div>
   
   <div class="container">
@@ -384,7 +376,6 @@
       <button class="tab-btn" data-tab="info">Thông tin nhóm</button>
     </div>
     
-    <!-- Player Tab - Single Player with Prev/Next -->
     <div id="player-tab" class="tab-content active">
       <div class="spotify-player">
         <img id="current-img" src="" alt="">
@@ -401,7 +392,6 @@
       </div>
     </div>
     
-    <!-- Info Tab -->
     <div id="info-tab" class="tab-content">
       <div class="info-tab">
         <div class="group-info">
@@ -411,62 +401,62 @@
           <p>Với sự kết hợp hoàn hảo giữa giọng hát, vũ đạo sáng tạo và hình ảnh đẹp mắt, ILLIT đang nhanh chóng trở thành một trong những nhóm nhạc nữ hàng đầu của K-Pop thế hệ mới.</p>
         </div>
         
-          <div class="members">
-        <div class="member-card">
-          <div class="member-img">
-            <img src="images/yunah.jpg" alt="Yunah">
+        <div class="members">
+          <div class="member-card">
+            <div class="member-img">
+              <img src="images/yunah.jpg" alt="Yunah">
+            </div>
+            <div class="member-info">
+              <h3>Yunah</h3>
+              <div class="position">Main Vocalist</div>
+              <div class="birthdate">15/01/2004</div>
+            </div>
           </div>
-          <div class="member-info">
-            <h3>Yunah</h3>
-            <div class="position">Main Vocalist</div>
-            <div class="birthdate">15/01/2004</div>
+          
+          <div class="member-card">
+            <div class="member-img">
+              <img src="images/minju.jpg" alt="Minju">
+            </div>
+            <div class="member-info">
+              <h3>Minju</h3>
+              <div class="position">Lead Vocalist</div>
+              <div class="birthdate">11/05/2004</div>
+            </div>
+          </div>
+          
+          <div class="member-card">
+            <div class="member-img">
+              <img src="images/moka.jpg" alt="Moka">
+            </div>
+            <div class="member-info">
+              <h3>Moka</h3>
+              <div class="position">Lead Dancer</div>
+              <div class="birthdate">08/10/2004</div>
+            </div>
+          </div>
+          
+          <div class="member-card">
+            <div class="member-img">
+              <img src="images/wonhee.jpg" alt="Wonhee">
+            </div>
+            <div class="member-info">
+              <h3>Wonhee</h3>
+              <div class="position">Lead Dancer, Vocalist</div>
+              <div class="birthdate">26/06/2007</div>
+            </div>
+          </div>
+          
+          <div class="member-card">
+            <div class="member-img">
+              <img src="images/iroha.jpg" alt="Iroha">
+            </div>
+            <div class="member-info">
+              <h3>Iroha</h3>
+              <div class="position">Main Dancer, Maknae</div>
+              <div class="birthdate">04/02/2008</div>
+            </div>
           </div>
         </div>
-        
-        <div class="member-card">
-          <div class="member-img">
-            <img src="images/minju.jpg" alt="Minju">
-          </div>
-          <div class="member-info">
-            <h3>Minju</h3>
-            <div class="position">Lead Vocalist</div>
-            <div class="birthdate">11/05/2004</div>
-          </div>
-        </div>
-        
-        <div class="member-card">
-          <div class="member-img">
-            <img src="images/moka.jpg" alt="Moka">
-          </div>
-          <div class="member-info">
-            <h3>Moka</h3>
-            <div class="position">Lead Dancer</div>
-            <div class="birthdate">08/10/2004</div>
-          </div>
-        </div>
-        
-        <div class="member-card">
-          <div class="member-img">
-            <img src="images/wonhee.jpg" alt="Wonhee">
-          </div>
-          <div class="member-info">
-            <h3>Wonhee</h3>
-            <div class="position">Lead Dancer, Vocalist</div>
-            <div class="birthdate">26/06/2007</div>
-          </div>
-        </div>
-        
-        <div class="member-card">
-          <div class="member-img">
-            <img src="images/iroha.jpg" alt="Iroha">
-          </div>
-          <div class="member-info">
-            <h3>Iroha</h3>
-            <div class="position">Main Dancer, Maknae</div>
-            <div class="birthdate">04/02/2008</div>
-          </div>
-        </div>
-      </div>
         
         <div class="designer-info">
           <h2>Tác giả thiết kế</h2>
@@ -578,11 +568,9 @@
     
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        // Remove active class from all buttons and contents
         tabBtns.forEach(b => b.classList.remove('active'));
         tabContents.forEach(c => c.classList.remove('active'));
         
-        // Add active class to clicked button and corresponding content
         btn.classList.add('active');
         const tabId = btn.getAttribute('data-tab');
         document.getElementById(`${tabId}-tab`).classList.add('active');
@@ -625,6 +613,7 @@
       currentName.textContent = song.name;
       currentArtist.textContent = song.artist;
       currentIframe.src = song.url;
+      console.log(`Playing: ${song.name}, Index: ${currentIndex}, Shuffle: ${shuffle}, Repeat: ${repeat}, Autoplay: ${autoplay}`);
 
       if (autoplay) {
         clearTimeout(autoplayTimer);
@@ -646,7 +635,10 @@
             if (repeat === 'all') {
               newIndex = 0;
             } else if (repeat === 'off' && auto) {
-              return; // Dừng nếu repeat off và auto tại bài cuối
+              autoplay = false;
+              autoplayBtn.classList.remove('active');
+              clearTimeout(autoplayTimer);
+              return;
             } else {
               newIndex = 0;
             }
@@ -667,9 +659,16 @@
       updatePlayer();
     }
 
+    // Kiểm tra xem các phần tử có tồn tại không
+    if (!currentImg || !currentName || !currentArtist || !currentIframe || !shuffleBtn || !prevBtn || !nextBtn || !repeatBtn || !autoplayBtn) {
+      console.error("Một hoặc nhiều phần tử không tồn tại. Kiểm tra ID trong HTML.");
+      return;
+    }
+
     shuffleBtn.addEventListener('click', () => {
       shuffle = !shuffle;
       shuffleBtn.classList.toggle('active');
+      console.log(`Shuffle: ${shuffle}`);
     });
 
     repeatBtn.addEventListener('click', () => {
@@ -686,6 +685,7 @@
         repeatIcon.textContent = 'repeat';
         repeatBtn.classList.remove('active');
       }
+      console.log(`Repeat: ${repeat}`);
     });
 
     autoplayBtn.addEventListener('click', () => {
@@ -697,6 +697,7 @@
       } else {
         clearTimeout(autoplayTimer);
       }
+      console.log(`Autoplay: ${autoplay}`);
     });
 
     prevBtn.addEventListener('click', playPrev);
