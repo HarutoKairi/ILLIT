@@ -246,36 +246,13 @@
       transform: translateY(-50%);
       box-shadow: 0 0 10px rgba(120, 115, 245, 0.8);
       transition: opacity 0.2s ease;
-      opacity: 0;
+      opacity: 1;
     }
 
 
-
-   .progress {
-      width: 70%; /* Example progress value */
-      height: 100%;
-      background-color: #76c7c0;
-      position: relative;
-    }
-
-    .progress::before {
-      content: attr(data-value) '%'; /* Display progress value */
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #333;
-      color: #fff;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 12px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
 
     
-    
+  
 
      .progress-bar:hover .progress::before {
       opacity: 1;
