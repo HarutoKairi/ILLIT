@@ -81,6 +81,13 @@ nextBtn.addEventListener("click", ()=>{
 
 
 mainAudio.addEventListener("timeupdate", (e)=>{
+
+    // Cập nhật thanh progress
+        const progressPercent = (currentTime / duration) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+
+
+  
   const currentTime = e.target.currentTime; 
   const duration = e.target.duration; 
   let progressWidth = (currentTime / duration) * 100;
@@ -108,10 +115,11 @@ mainAudio.addEventListener("timeupdate", (e)=>{
 });
 
 
+
 progressArea.addEventListener("click", (e)=>{
-  let progressWidth = progressArea.clientWidth; 
-  let clickedOffsetX = e.offsetX; 
-  let songDuration = mainAudio.duration; 
+  const progressWidth = progressArea.clientWidth; 
+  const clickedOffsetX = e.offsetX; 
+  const songDuration = mainAudio.duration; 
   
   mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
   playMusic(); 
