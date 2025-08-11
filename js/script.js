@@ -82,21 +82,35 @@ nextBtn.addEventListener("click", ()=>{
 
 mainAudio.addEventListener("timeupdate", (e)=>{
 
-    // Cập nhật thanh progress
-        const progressPercent = (currentTime / duration) * 100;
-        progressBar.style.width = `${progressPercent}%`;
-
-
-  
   const currentTime = e.target.currentTime; 
   const duration = e.target.duration; 
+
+    // Cập nhật thanh progress (kiểm tra duration > 0)
+  if (duration > 0) {
+    const progressWidth = (currentTime / duration) * 100;
+    progressBar.style.width = `${progressWidth}%`;
+  }
+
+  
+
+  
   let progressWidth = (currentTime / duration) * 100;
   progressBar.style.width = `${progressWidth}%`;
 
   let musicCurrentTime = wrapper.querySelector(".current-time"),
   musicDuration = wrapper.querySelector(".max-duration");
+
+   // Cập nhật thời gian hiện tại
+  let musicCurrentTime = wrapper.querySelector(".current-time");
+  let currentMin = Math.floor(currentTime / 60);
+  let currentSec = Math.floor(currentTime % 60);
+  if (currentSec < 10) currentSec = `0${currentSec}`;
+  musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
+});
+
+
+/*  
   mainAudio.addEventListener("loadeddata", ()=>{
-   
     let mainAdDuration = mainAudio.duration;
     let totalMin = Math.floor(mainAdDuration / 60);
     let totalSec = Math.floor(mainAdDuration % 60);
@@ -104,7 +118,7 @@ mainAudio.addEventListener("timeupdate", (e)=>{
       totalSec = `0${totalSec}`;
     }
     musicDuration.innerText = `${totalMin}:${totalSec}`;
-  });
+  }); 
   
   let currentMin = Math.floor(currentTime / 60);
   let currentSec = Math.floor(currentTime % 60);
@@ -113,6 +127,19 @@ mainAudio.addEventListener("timeupdate", (e)=>{
   }
   musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
 });
+*/
+mainAudio.addEventListener("loadeddata", () => {
+  let musicDuration = wrapper.querySelector(".max-duration");
+  const duration = mainAudio.duration;
+  
+  if (duration > 0) {
+    let totalMin = Math.floor(duration / 60);
+    let totalSec = Math.floor(duration % 60);
+    if (totalSec < 10) totalSec = `0${totalSec}`;
+    musicDuration.innerText = `${totalMin}:${totalSec}`;
+  }
+});
+
 
 
 
