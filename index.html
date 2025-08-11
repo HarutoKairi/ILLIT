@@ -381,7 +381,7 @@
         <img id="current-img" src="" alt="">
         <h3 id="current-name"></h3>
         <p id="current-artist"></p>
-        <iframe id="current-iframe" style="border-radius:12px" src="" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <iframe id="current-iframe" style="border-radius:12px" src="" width="100%" height="315" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
         <div class="player-controls">
           <button id="shuffle-btn" title="Phát ngẫu nhiên"><i class="material-icons">shuffle</i></button>
           <button id="prev-btn" title="Bài trước"><i class="material-icons">skip_previous</i></button>
@@ -469,7 +469,6 @@
 
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
-    // Khởi tạo hiệu ứng hạt
     particlesJS("particles-js", {
       "particles": {
         "number": {
@@ -562,7 +561,6 @@
       "retina_detect": true
     });
     
-    // Tab switching
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
     
@@ -578,21 +576,20 @@
     });
   </script>
   <script>
-    // Danh sách bài hát với embed URLs từ Spotify và duration (giây)
     const songs = [
-      { name: "Magnetic", artist: "ILLIT", img: "music-1.jpg", url: "https://open.spotify.com/embed/track/1aKvZDoLGkNMxoRYgkckZG?utm_source=generator&theme=0", duration: 160 },
-      { name: "Lucky Girl Syndrome", artist: "ILLIT", img: "music-2.jpg", url: "https://open.spotify.com/embed/track/2kIUILBPlz4exX9xIFS275?utm_source=generator&theme=0", duration: 145 },
-      { name: "Midnight Fiction", artist: "ILLIT", img: "music-3.jpg", url: "https://open.spotify.com/embed/track/6QqrxJe1iQxwLY6he6FLFo?utm_source=generator&theme=0", duration: 168 },
-      { name: "My World", artist: "ILLIT", img: "music-4.jpg", url: "https://open.spotify.com/embed/track/2Xiaplc23BureS4EDeE8xa?utm_source=generator&theme=0", duration: 107 },
-      { name: "Tick Tack", artist: "ILLIT", img: "music-5.jpg", url: "https://open.spotify.com/embed/track/0znsc67nMhP4X9hjhvoyeP?utm_source=generator&theme=0", duration: 136 },
-      { name: "Little Monster", artist: "ILLIT", img: "music-6.jpg", url: "https://open.spotify.com/embed/track/5MaPzLp2vwSqu8YyUZ4zR7?utm_source=generator&theme=0", duration: 184 },
-      { name: "Billyeoon Goyangi (Do the Dance)", artist: "ILLIT", img: "music-7.jpg", url: "https://open.spotify.com/embed/track/4p0uVFAXKUISu8yp9gNtWE?utm_source=generator&theme=0", duration: 175 },
-      { name: "Jellyous", artist: "ILLIT", img: "music-8.jpg", url: "https://open.spotify.com/embed/track/0wFU2pYHZi45Ws1VD6aSJX?utm_source=generator&theme=0", duration: 178 }
+      { name: "Magnetic", artist: "ILLIT", img: "music-1.jpg", url: "https://www.youtube.com/embed/WzFecHEWvb4?enablejsapi=1", duration: 160 },
+      { name: "Lucky Girl Syndrome", artist: "ILLIT", img: "music-2.jpg", url: "https://www.youtube.com/embed/r1Y0m4G-wdE?enablejsapi=1", duration: 145 },
+      { name: "Midnight Fiction", artist: "ILLIT", img: "music-3.jpg", url: "https://www.youtube.com/embed/r1Y0m4G-wdE?enablejsapi=1", duration: 168 },
+      { name: "My World", artist: "ILLIT", img: "music-4.jpg", url: "https://www.youtube.com/embed/r1Y0m4G-wdE?enablejsapi=1", duration: 107 },
+      { name: "Tick Tack", artist: "ILLIT", img: "music-5.jpg", url: "https://www.youtube.com/embed/r1Y0m4G-wdE?enablejsapi=1", duration: 136 },
+      { name: "Little Monster", artist: "ILLIT", img: "music-6.jpg", url: "https://www.youtube.com/embed/r1Y0m4G-wdE?enablejsapi=1", duration: 184 },
+      { name: "Billyeoon Goyangi (Do the Dance)", artist: "ILLIT", img: "music-7.jpg", url: "https://www.youtube.com/embed/r1Y0m4G-wdE?enablejsapi=1", duration: 175 },
+      { name: "Jellyous", artist: "ILLIT", img: "music-8.jpg", url: "https://www.youtube.com/embed/r1Y0m4G-wdE?enablejsapi=1", duration: 178 }
     ];
 
     let currentIndex = 0;
     let shuffle = false;
-    let repeat = 'off'; // 'off', 'all', 'one'
+    let repeat = 'off';
     let autoplay = false;
     let autoplayTimer;
 
@@ -659,7 +656,6 @@
       updatePlayer();
     }
 
-    // Kiểm tra xem các phần tử có tồn tại không
     if (!currentImg || !currentName || !currentArtist || !currentIframe || !shuffleBtn || !prevBtn || !nextBtn || !repeatBtn || !autoplayBtn) {
       console.error("Một hoặc nhiều phần tử không tồn tại. Kiểm tra ID trong HTML.");
       return;
@@ -703,7 +699,6 @@
     prevBtn.addEventListener('click', playPrev);
     nextBtn.addEventListener('click', () => playNext(false));
 
-    // Khởi tạo player với bài hát đầu tiên
     updatePlayer();
   </script>
 </body>
