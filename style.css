@@ -101,6 +101,8 @@ body {
   background: #2c2c3a;
   cursor: pointer;
 
+   opacity: 1;
+
   position: relative;
   
 }
