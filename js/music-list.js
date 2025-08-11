@@ -1,4 +1,3 @@
-<DOCUMENT filename="music-list.js">
 let allMusic = [
   {
     name: "Magnetic",
@@ -18,35 +17,44 @@ let allMusic = [
     img: "music-3",
     src: "music-3"
   },
+
   {
     name: "My World",
     artist: "ILLIT",
     img: "music-4",
     src: "music-4"
   },
-  {
+
+    {
     name: "Tick Tack",
     artist: "ILLIT",
     img: "music-5",
     src: "music-5"
   },
-  {
+
+    {
     name: "Little Monster",
     artist: "ILLIT",
     img: "music-6",
     src: "music-6"
   },
+
   {
     name: "Billyeoon Goyangi (Do the Dance)",
     artist: "ILLIT",
     img: "music-7",
     src: "music-7"
   },
-  {
+
+
+    {
     name: "Jellyous",
     artist: "ILLIT",
     img: "music-8",
     src: "Jellyous"
-  }
+  },
+  
+
+
 ];
-</DOCUMENT>
+

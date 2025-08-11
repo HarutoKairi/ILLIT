@@ -1,4 +1,3 @@
-<DOCUMENT filename="script.js">
 const wrapper = document.querySelector(".wrapper"),
 musicImg = wrapper.querySelector(".img-area img"),
 musicName = wrapper.querySelector(".song-details .name"),
@@ -11,103 +10,110 @@ progressArea = wrapper.querySelector(".progress-area"),
 progressBar = progressArea.querySelector(".progress-bar"),
 musicList = wrapper.querySelector(".music-list"),
 moreMusicBtn = wrapper.querySelector("#more-music"),
-closemoreMusic = musicList.querySelector("#close"),
-volumeSlider = wrapper.querySelector("#volume"),
-volumeIcon = wrapper.querySelector(".volume-icon");
+closemoreMusic = musicList.querySelector("#close");
 
 let musicIndex = Math.floor((Math.random() * allMusic.length) + 1);
-let isMusicPaused = true;
+isMusicPaused = true;
 
-window.addEventListener("load", () => {
+window.addEventListener("load", ()=>{
   loadMusic(musicIndex);
-  playingSong();
+  playingSong(); 
 });
 
-function loadMusic(indexNumb) {
+function loadMusic(indexNumb){
   musicName.innerText = allMusic[indexNumb - 1].name;
   musicArtist.innerText = allMusic[indexNumb - 1].artist;
-  musicImg.src = `images/${allMusic[indexNumb - 1].img}.jpg`;  // Giả sử hình ảnh là .jpg, chỉnh nếu cần
+  musicImg.src = `images/${allMusic[indexNumb - 1].src}.jpg`;
   mainAudio.src = `songs/${allMusic[indexNumb - 1].src}.mp3`;
 }
 
-function playMusic() {
+function playMusic(){
   wrapper.classList.add("paused");
   playPauseBtn.querySelector("i").innerText = "pause";
   mainAudio.play();
 }
 
-function pauseMusic() {
+function pauseMusic(){
   wrapper.classList.remove("paused");
   playPauseBtn.querySelector("i").innerText = "play_arrow";
   mainAudio.pause();
 }
 
-function prevMusic() {
-  musicIndex--;
-  musicIndex = musicIndex < 1 ? allMusic.length : musicIndex;
+function prevMusic(){
+  musicIndex--; 
+  musicIndex < 1 ? musicIndex = allMusic.length : musicIndex = musicIndex;
   loadMusic(musicIndex);
   playMusic();
-  playingSong();
+  playingSong(); 
 }
 
-function nextMusic() {
-  musicIndex++;
-  musicIndex = musicIndex > allMusic.length ? 1 : musicIndex;
+function nextMusic(){
+  musicIndex++; 
+  musicIndex > allMusic.length ? musicIndex = 1 : musicIndex = musicIndex;
   loadMusic(musicIndex);
   playMusic();
-  playingSong();
+  playingSong(); 
 }
 
-playPauseBtn.addEventListener("click", () => {
+playPauseBtn.addEventListener("click", ()=>{
   const isMusicPlay = wrapper.classList.contains("paused");
   isMusicPlay ? pauseMusic() : playMusic();
   playingSong();
 });
 
-prevBtn.addEventListener("click", () => {
+prevBtn.addEventListener("click", ()=>{
   prevMusic();
 });
 
-nextBtn.addEventListener("click", () => {
+nextBtn.addEventListener("click", ()=>{
   nextMusic();
 });
 
-mainAudio.addEventListener("timeupdate", (e) => {
-  const currentTime = e.target.currentTime;
-  const duration = e.target.duration;
+// SỬA LỖI PHẦN PROGRESS BAR
+mainAudio.addEventListener("timeupdate", (e)=>{
+  const currentTime = e.target.currentTime; 
+  const duration = e.target.duration; 
   let progressWidth = (currentTime / duration) * 100;
   progressBar.style.width = `${progressWidth}%`;
 
   let musicCurrentTime = wrapper.querySelector(".current-time"),
-    musicDuration = wrapper.querySelector(".max-duration");
-
+  musicDuartion = wrapper.querySelector(".max-duration");
+  mainAudio.addEventListener("loadeddata", ()=>{
+   
+    let mainAdDuration = mainAudio.duration;
+    let totalMin = Math.floor(mainAdDuration / 60);
+    let totalSec = Math.floor(mainAdDuration % 60);
+    if(totalSec < 10){ 
+      totalSec = `0${totalSec}`;
+    }
+    musicDuartion.innerText = `${totalMin}:${totalSec}`;
+  });
+  
   let currentMin = Math.floor(currentTime / 60);
   let currentSec = Math.floor(currentTime % 60);
-  if (currentSec < 10) currentSec = `0${currentSec}`;
-  musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
-
-  if (!isNaN(duration)) {
-    let totalMin = Math.floor(duration / 60);
-    let totalSec = Math.floor(duration % 60);
-    if (totalSec < 10) totalSec = `0${totalSec}`;
-    musicDuration.innerText = `${totalMin}:${totalSec}`;
+  if(currentSec < 10){ 
+    currentSec = `0${currentSec}`;
   }
+  musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
 });
 
-progressArea.addEventListener("click", (e) => {
-  let progressWidth = progressArea.clientWidth;
-  let clickedOffsetX = e.offsetX;
-  let songDuration = mainAudio.duration;
 
+// SỬA LỖI CLICK TRÊN PROGRESS AREA
+progressArea.addEventListener("click", (e)=>{
+  let progressWidth = progressArea.clientWidth; 
+  let clickedOffsetX = e.offsetX; 
+  let songDuration = mainAudio.duration; 
+  
   mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-  playMusic();
+  playMusic(); 
   playingSong();
 });
 
+// PHẦN CÒN LẠI GIỮ NGUYÊN
 const repeatBtn = wrapper.querySelector("#repeat-plist");
-repeatBtn.addEventListener("click", () => {
-  let getText = repeatBtn.innerText;
-  switch (getText) {
+repeatBtn.addEventListener("click", ()=>{
+  let getText = repeatBtn.innerText; 
+  switch(getText){
     case "repeat":
       repeatBtn.innerText = "repeat_one";
       repeatBtn.setAttribute("title", "Song looped");
@@ -123,23 +129,23 @@ repeatBtn.addEventListener("click", () => {
   }
 });
 
-mainAudio.addEventListener("ended", () => {
-  let getText = repeatBtn.innerText;
-  switch (getText) {
+mainAudio.addEventListener("ended", ()=>{
+  let getText = repeatBtn.innerText; 
+  switch(getText){
     case "repeat":
       nextMusic();
       break;
     case "repeat_one":
-      mainAudio.currentTime = 0;
-      loadMusic(musicIndex);
-      playMusic();
+      mainAudio.currentTime = 0; 
+      loadMusic(musicIndex); 
+      playMusic(); 
       break;
     case "shuffle":
-      let randIndex = Math.floor((Math.random() * allMusic.length) + 1);
-      do {
+      let randIndex = Math.floor((Math.random() * allMusic.length) + 1); 
+      do{
         randIndex = Math.floor((Math.random() * allMusic.length) + 1);
-      } while (musicIndex == randIndex);
-      musicIndex = randIndex;
+      }while(musicIndex == randIndex); 
+      musicIndex = randIndex; 
       loadMusic(musicIndex);
       playMusic();
       playingSong();
@@ -147,11 +153,10 @@ mainAudio.addEventListener("ended", () => {
   }
 });
 
-moreMusicBtn.addEventListener("click", () => {
+moreMusicBtn.addEventListener("click", ()=>{
   musicList.classList.toggle("show");
 });
-
-closemoreMusic.addEventListener("click", () => {
+closemoreMusic.addEventListener("click", ()=>{
   moreMusicBtn.click();
 });
 
@@ -161,38 +166,39 @@ for (let i = 0; i < allMusic.length; i++) {
   let liTag = `<li li-index="${i + 1}">
                 <div class="row">
                   <span>${allMusic[i].name}</span>
-                  <p>${allMusic[i].artist}</p>
                 </div>
                 <span id="${allMusic[i].src}" class="audio-duration"></span>
                 <audio class="${allMusic[i].src}" src="songs/${allMusic[i].src}.mp3"></audio>
               </li>`;
-  ulTag.insertAdjacentHTML("beforeend", liTag);
+  ulTag.insertAdjacentHTML("beforeend", liTag); 
 
   let liAudioDurationTag = ulTag.querySelector(`#${allMusic[i].src}`);
   let liAudioTag = ulTag.querySelector(`.${allMusic[i].src}`);
-  liAudioTag.addEventListener("loadeddata", () => {
+  liAudioTag.addEventListener("loadeddata", ()=>{
     let duration = liAudioTag.duration;
     let totalMin = Math.floor(duration / 60);
     let totalSec = Math.floor(duration % 60);
-    if (totalSec < 10) totalSec = `0${totalSec}`;
-    liAudioDurationTag.innerText = `${totalMin}:${totalSec}`;
-    liAudioDurationTag.setAttribute("t-duration", `${totalMin}:${totalSec}`);
+    if(totalSec < 10){ 
+      totalSec = `0${totalSec}`;
+    };
+    liAudioDurationTag.innerText = `${totalMin}:${totalSec}`; 
+    liAudioDurationTag.setAttribute("t-duration", `${totalMin}:${totalSec}`); 
   });
 }
 
-function playingSong() {
+function playingSong(){
   const allLiTag = ulTag.querySelectorAll("li");
-
+  
   for (let j = 0; j < allLiTag.length; j++) {
     let audioTag = allLiTag[j].querySelector(".audio-duration");
-
-    if (allLiTag[j].classList.contains("playing")) {
+    
+    if(allLiTag[j].classList.contains("playing")){
       allLiTag[j].classList.remove("playing");
       let adDuration = audioTag.getAttribute("t-duration");
       audioTag.innerText = adDuration;
     }
-
-    if (allLiTag[j].getAttribute("li-index") == musicIndex) {
+    
+    if(allLiTag[j].getAttribute("li-index") == musicIndex){
       allLiTag[j].classList.add("playing");
       audioTag.innerText = "Playing";
     }
@@ -201,43 +207,10 @@ function playingSong() {
   }
 }
 
-function clicked(element) {
+function clicked(element){
   let getLiIndex = element.getAttribute("li-index");
   musicIndex = getLiIndex;
   loadMusic(musicIndex);
   playMusic();
   playingSong();
 }
-
-// Xử lý âm lượng
-mainAudio.volume = volumeSlider.value;
-
-volumeSlider.addEventListener("input", () => {
-  mainAudio.volume = volumeSlider.value;
-  updateVolumeIcon();
-});
-
-function updateVolumeIcon() {
-  if (mainAudio.volume === 0) {
-    volumeIcon.innerText = "volume_off";
-  } else if (mainAudio.volume < 0.5) {
-    volumeIcon.innerText = "volume_down";
-  } else {
-    volumeIcon.innerText = "volume_up";
-  }
-}
-
-volumeIcon.addEventListener("click", () => {
-  if (mainAudio.volume > 0) {
-    mainAudio.volume = 0;
-    volumeSlider.value = 0;
-    volumeIcon.innerText = "volume_off";
-  } else {
-    mainAudio.volume = 1;
-    volumeSlider.value = 1;
-    volumeIcon.innerText = "volume_up";
-  }
-});
-
-updateVolumeIcon(); // Khởi tạo icon ban đầu
-</DOCUMENT>
