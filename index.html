@@ -124,26 +124,20 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Player Tab - Modified for Spotify Iframes */
-    .spotify-list {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    
-    .spotify-item {
+    /* Player Tab - Single Player with Prev/Next */
+    .spotify-player {
       background: rgba(30, 20, 60, 0.7);
       backdrop-filter: blur(10px);
       border-radius: 25px;
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      padding: 20px;
+      max-width: 450px;
+      margin: 0 auto;
+      padding: 25px;
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    .spotify-item img {
+    .spotify-player img {
       width: 200px;
       height: 200px;
       border-radius: 50%;
@@ -151,15 +145,38 @@
       object-fit: cover;
     }
     
-    .spotify-item h3 {
+    .spotify-player h3 {
       font-size: 1.5rem;
       margin-bottom: 5px;
     }
     
-    .spotify-item p {
+    .spotify-player p {
       font-size: 1.1rem;
       color: #a29ebd;
       margin-bottom: 20px;
+    }
+    
+    .player-controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .player-controls button {
+      background: linear-gradient(135deg, #ff6ec4, #7873f5);
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .player-controls button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(120, 115, 245, 0.4);
     }
     
     /* Info Tab */
@@ -305,7 +322,11 @@
         font-size: 2.5rem;
       }
       
-      .spotify-item img {
+      .spotify-player {
+        max-width: 100%;
+      }
+      
+      .spotify-player img {
         width: 150px;
         height: 150px;
       }
@@ -328,9 +349,14 @@
         font-size: 1rem;
       }
       
-      .spotify-item img {
+      .spotify-player img {
         width: 120px;
         height: 120px;
+      }
+      
+      .player-controls button {
+        padding: 8px 15px;
+        font-size: 1rem;
       }
     }
   </style>
@@ -350,9 +376,18 @@
       <button class="tab-btn" data-tab="info">Thông tin nhóm</button>
     </div>
     
-    <!-- Player Tab - Modified to show Spotify iframes -->
+    <!-- Player Tab - Single Player with Prev/Next -->
     <div id="player-tab" class="tab-content active">
-      <div class="spotify-list" id="spotifyList"></div>
+      <div class="spotify-player">
+        <img id="current-img" src="" alt="">
+        <h3 id="current-name"></h3>
+        <p id="current-artist"></p>
+        <iframe id="current-iframe" style="border-radius:12px" src="" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <div class="player-controls">
+          <button id="prev-btn">Bài trước</button>
+          <button id="next-btn">Bài sau</button>
+        </div>
+      </div>
     </div>
     
     <!-- Info Tab -->
@@ -544,56 +579,48 @@
     });
   </script>
   <script>
-    // Cập nhật music-list.js với embed URLs (giả sử đã cập nhật trong file music-list.js)
-    // Ví dụ: thêm trường spotifyEmbedUrl vào mỗi object trong allMusic
-
-    // let allMusic = [ ... với spotifyEmbedUrl: 'https://open.spotify.com/embed/track/ID?utm_source=generator&theme=0' ]
-
-    // Script để hiển thị danh sách iframe Spotify
-    const spotifyList = document.getElementById('spotifyList');
-
-    // Danh sách embed URLs từ Spotify (dựa trên tìm kiếm)
-    const embedUrls = [
-      { name: "Magnetic", artist: "ILLIT", img: "music-1", url: "https://open.spotify.com/embed/track/1aKvZDoLGkNMxoRYgkckZG?utm_source=generator&theme=0" },
-      { name: "Lucky Girl Syndrome", artist: "ILLIT", img: "music-2", url: "https://open.spotify.com/embed/track/2kIUILBPlz4exX9xIFS275?utm_source=generator&theme=0" },
-      { name: "Midnight Fiction", artist: "ILLIT", img: "music-3", url: "https://open.spotify.com/embed/track/6QqrxJe1iQxwLY6he6FLFo?utm_source=generator&theme=0" },
-      { name: "My World", artist: "ILLIT", img: "music-4", url: "https://open.spotify.com/embed/track/2Xiaplc23BureS4EDeE8xa?utm_source=generator&theme=0" },
-      { name: "Tick Tack", artist: "ILLIT", img: "music-5", url: "https://open.spotify.com/embed/track/0znsc67nMhP4X9hjhvoyeP?utm_source=generator&theme=0" },
-      { name: "Little Monster", artist: "ILLIT", img: "music-6", url: "https://open.spotify.com/embed/track/5MaPzLp2vwSqu8YyUZ4zR7?utm_source=generator&theme=0" },
-      { name: "Billyeoon Goyangi (Do the Dance)", artist: "ILLIT", img: "music-7", url: "https://open.spotify.com/embed/track/4p0uVFAXKUISu8yp9gNtWE?utm_source=generator&theme=0" },
-      { name: "Jellyous", artist: "ILLIT", img: "music-8", url: "https://open.spotify.com/embed/track/0wFU2pYHZi45Ws1VD6aSJX?utm_source=generator&theme=0" }
+    // Danh sách bài hát với embed URLs từ Spotify
+    const songs = [
+      { name: "Magnetic", artist: "ILLIT", img: "music-1.jpg", url: "https://open.spotify.com/embed/track/1aKvZDoLGkNMxoRYgkckZG?utm_source=generator&theme=0" },
+      { name: "Lucky Girl Syndrome", artist: "ILLIT", img: "music-2.jpg", url: "https://open.spotify.com/embed/track/2kIUILBPlz4exX9xIFS275?utm_source=generator&theme=0" },
+      { name: "Midnight Fiction", artist: "ILLIT", img: "music-3.jpg", url: "https://open.spotify.com/embed/track/6QqrxJe1iQxwLY6he6FLFo?utm_source=generator&theme=0" },
+      { name: "My World", artist: "ILLIT", img: "music-4.jpg", url: "https://open.spotify.com/embed/track/2Xiaplc23BureS4EDeE8xa?utm_source=generator&theme=0" },
+      { name: "Tick Tack", artist: "ILLIT", img: "music-5.jpg", url: "https://open.spotify.com/embed/track/0znsc67nMhP4X9hjhvoyeP?utm_source=generator&theme=0" },
+      { name: "Little Monster", artist: "ILLIT", img: "music-6.jpg", url: "https://open.spotify.com/embed/track/5MaPzLp2vwSqu8YyUZ4zR7?utm_source=generator&theme=0" },
+      { name: "Billyeoon Goyangi (Do the Dance)", artist: "ILLIT", img: "music-7.jpg", url: "https://open.spotify.com/embed/track/4p0uVFAXKUISu8yp9gNtWE?utm_source=generator&theme=0" },
+      { name: "Jellyous", artist: "ILLIT", img: "music-8.jpg", url: "https://open.spotify.com/embed/track/0wFU2pYHZi45Ws1VD6aSJX?utm_source=generator&theme=0" }
     ];
 
-    embedUrls.forEach(music => {
-      const item = document.createElement('div');
-      item.className = 'spotify-item';
+    let currentIndex = 0;
 
-      const img = document.createElement('img');
-      img.src = `images/${music.img}.jpg`; // Giả sử hình ảnh ở thư mục images
-      img.alt = music.name;
+    const currentImg = document.getElementById('current-img');
+    const currentName = document.getElementById('current-name');
+    const currentArtist = document.getElementById('current-artist');
+    const currentIframe = document.getElementById('current-iframe');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
 
-      const title = document.createElement('h3');
-      title.textContent = music.name;
+    function updatePlayer() {
+      const song = songs[currentIndex];
+      currentImg.src = `images/${song.img}`; // Giả sử hình ảnh ở thư mục images
+      currentImg.alt = song.name;
+      currentName.textContent = song.name;
+      currentArtist.textContent = song.artist;
+      currentIframe.src = song.url;
+    }
 
-      const artist = document.createElement('p');
-      artist.textContent = music.artist;
-
-      const iframe = document.createElement('iframe');
-      iframe.src = music.url;
-      iframe.style.borderRadius = '12px';
-      iframe.width = '100%';
-      iframe.height = '152';
-      iframe.frameBorder = '0';
-      iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
-      iframe.loading = 'lazy';
-
-      item.appendChild(img);
-      item.appendChild(title);
-      item.appendChild(artist);
-      item.appendChild(iframe);
-
-      spotifyList.appendChild(item);
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+      updatePlayer();
     });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % songs.length;
+      updatePlayer();
+    });
+
+    // Khởi tạo player với bài hát đầu tiên
+    updatePlayer();
   </script>
 </body>
 </html>
