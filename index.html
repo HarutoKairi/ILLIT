@@ -7,11 +7,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="shortcut icon" href="./logo.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  
-
-
-  
   <style>
     * {
       margin: 0;
@@ -129,349 +124,42 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Player Tab */
-    .wrapper {
+    /* Player Tab - Modified for Spotify Iframes */
+    .spotify-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .spotify-item {
       background: rgba(30, 20, 60, 0.7);
       backdrop-filter: blur(10px);
       border-radius: 25px;
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      max-width: 450px;
-      margin: 0 auto;
-      padding: 25px;
-      position: relative;
-      overflow: hidden;
+      padding: 20px;
+      text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 25px;
-      color: #d0cde7;
-    }
-    
-    .top-bar i {
-      font-size: 24px;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-    
-    .top-bar i:hover {
-      color: #ff6ec4;
-    }
-    
-    .top-bar span {
-      font-weight: 500;
-    }
-    
-    .img-area {
-      width: 300px;
-      height: 300px;
-      margin: 0 auto 25px;
+    .spotify-item img {
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      border: 5px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-      animation: rotateAlbum 20s linear infinite;
-      animation-play-state: paused;
-    }
-    
-    .wrapper.playing .img-area {
-      animation-play-state: running;
-    }
-    
-    @keyframes rotateAlbum {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    
-    .img-area img {
-      width: 100%;
-      height: 100%;
+      margin-bottom: 15px;
       object-fit: cover;
     }
     
-    .song-details {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-    
-    .song-details .name {
-      font-size: 1.8rem;
-      font-weight: 600;
+    .spotify-item h3 {
+      font-size: 1.5rem;
       margin-bottom: 5px;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
     
-    .song-details .artist {
-      font-size: 1.2rem;
-      color: #a29ebd;
-    }
-
-
-
-    /*
-    .progress-area {
-      margin-bottom: 30px;
-    }
-    
-    .progress-bar {
-      height: 6px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      
-      position: relative;
-      
-    }
-    
-    .progress-bar .progress {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #ff6ec4, #7873f5);
-      border-radius: 10px;
-      position: relative;
-
-       transition: width 0.1s linear;
-    }
-    
-  .progress-bar .progress::before {
-      content: '';
-      position: absolute;
-      height: 12px;
-      width: 12px;
-      background: #fff;
-      border-radius: 50%;
-      right: -5px;
-      top: 50%;
-      transform: translateY(-50%);
-      box-shadow: 0 0 10px rgba(120, 115, 245, 0.8);
-    /*  transition: opacity 0.2s ease; 
-      opacity: 1;
-    }
-
-
-
-    
-  
-
-     .progress-bar:hover .progress::before {
-      opacity: 1;
-    }
-    
-
-    
-    .song-timer {
-      display: flex;
-      justify-content: space-between;
-      color: #a29ebd;
-      font-size: 0.9rem;
-    }
-    */
-
-.progress-area {
-  height: 6px;
-  width: 100%;
-  border-radius: 50px;
-  background: #f0f0f0;
-  cursor: pointer;
-}
-.progress-area .progress-bar {
-  height: inherit;
-  width: 0%;
-  position: relative;
-  border-radius: inherit;
-  background: #df73b3;
-}
-.progress-bar::before {
-  content: "";
-  position: absolute;
-  height: 12px;
-  width: 12px;
-  border-radius: 50%;
-  top: 50%;
-  right: -5px;
-  z-index: 2;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-50%);
-  background: inherit;
-  transition: opacity 0.2s ease;
-}
-.progress-area:hover .progress-bar::before {
-  opacity: 1;
-  pointer-events: none;
-}
-.progress-area .song-timer {
-  margin-top: 2px;
-}
-.song-timer span {
-  margin-top: 10px;
-  font-size: 13px;
-  color: var(--lightback);
-}
-
-
-
-
-
-    
-    .controls {
-
-        margin-top: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    
-    .controls i {
-      font-size: 28px;
-      margin: 0 15px;
-      cursor: pointer;
-      color: #d0cde7;
-      transition: all 0.3s ease;
-    }
-    
-    .controls i:hover {
-      color: #ff6ec4;
-      transform: scale(1.1);
-    }
-    
-    .play-pause {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ff6ec4, #7873f5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 5px 20px rgba(120, 115, 245, 0.4);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .play-pause:hover {
-      transform: scale(1.05);
-      box-shadow: 0 7px 25px rgba(120, 115, 245, 0.6);
-    }
-    
-    .play-pause i {
-      color: #fff;
-      font-size: 32px;
-      margin: 0;
-    }
-    
-    /* Music List */
-    .music-list {
-      position: absolute;
-      background: rgba(30, 20, 60, 0.95);
-      backdrop-filter: blur(10px);
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      border-radius: 25px;
-      padding: 25px;
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-      z-index: 10;
-      overflow-y: auto;
-    }
-    
-    .music-list.show {
-      transform: translateX(0);
-    }
-    
-    .music-list .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 25px;
-    }
-    
-    .music-list .header .row {
-      display: flex;
-      align-items: center;
-    }
-    
-    .music-list .header .row i {
-      font-size: 24px;
-      color: #ff6ec4;
-      margin-right: 10px;
-    }
-    
-    .music-list .header .row span {
-      font-size: 1.2rem;
-      font-weight: 500;
-    }
-    
-    .music-list #close {
-      font-size: 24px;
-      color: #d0cde7;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-    
-    .music-list #close:hover {
-      color: #ff6ec4;
-    }
-    
-    .music-list ul {
-      list-style: none;
-    }
-    
-    .music-list ul li {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    
-    .music-list ul li:hover {
-      background: rgba(120, 115, 245, 0.2);
-    }
-    
-    .music-list ul li.playing {
-      background: rgba(120, 115, 245, 0.3);
-      border-left: 4px solid #ff6ec4;
-    }
-    
-    .music-list ul li .row {
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-    
-    .music-list ul li .row .details {
-      margin-left: 15px;
-      flex: 1;
-    }
-    
-    .music-list ul li .row .details .name {
+    .spotify-item p {
       font-size: 1.1rem;
-      font-weight: 500;
-      margin-bottom: 5px;
-    }
-    
-    .music-list ul li .row .details .artist {
-      font-size: 0.9rem;
       color: #a29ebd;
-    }
-    
-    .music-list ul li .audio-duration {
-      font-size: 0.9rem;
-      color: #a29ebd;
+      margin-bottom: 20px;
     }
     
     /* Info Tab */
@@ -617,13 +305,9 @@
         font-size: 2.5rem;
       }
       
-      .wrapper {
-        max-width: 100%;
-      }
-      
-      .img-area {
-        width: 250px;
-        height: 250px;
+      .spotify-item img {
+        width: 150px;
+        height: 150px;
       }
       
       .members {
@@ -644,22 +328,9 @@
         font-size: 1rem;
       }
       
-      .img-area {
-        width: 200px;
-        height: 200px;
-      }
-      
-      .controls i {
-        margin: 0 10px;
-      }
-      
-      .play-pause {
-        width: 50px;
-        height: 50px;
-      }
-      
-      .play-pause i {
-        font-size: 28px;
+      .spotify-item img {
+        width: 120px;
+        height: 120px;
       }
     }
   </style>
@@ -679,61 +350,9 @@
       <button class="tab-btn" data-tab="info">Thông tin nhóm</button>
     </div>
     
-    <!-- Player Tab -->
+    <!-- Player Tab - Modified to show Spotify iframes -->
     <div id="player-tab" class="tab-content active">
-      <div class="wrapper">
-        <div class="top-bar">
-          <i class="material-icons">expand_more</i>
-          <span>Đang phát bài</span>
-          <i class="material-icons">more_horiz</i>
-        </div>
-
-        <div class="img-area">
-          <img src="" alt="">
-        </div>
-
-        <div class="song-details">
-          <p class="name"></p>
-          <p class="artist"></p>
-        </div>
-
-
-        
-               <div class="progress-area">
-          <div class="progress-bar">
-            <audio src="" id="main-audio"></audio>
-            <div class="progress"></div>
-          </div>
-          <div class="song-timer">
-            <span class="current-time">0:00</span>
-            <span class="max-duration">1:00</span>
-          </div>
-        </div>
-
-
-        <div class="controls">
-          <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
-          <i id="prev" class="material-icons" >skip_previous</i>
-          <div class="play-pause">
-            <i class="material-icons play" >play_arrow</i>
-          </div>
-          <i id="next" class="material-icons" >skip_next</i>
-          <i id="more-music" class="material-icons" >queue_music</i>
-        </div>
-
-        <div class="music-list">
-          <div class="header">
-            <div class="row">
-              <i class="list material-icons">queue_music</i>
-              <span>Danh sách bài hát</span>
-            </div>
-            <i id="close" class="material-icons">close</i>
-          </div>
-          <ul>
-            <!-- Danh sách bài hát sẽ được tải động -->
-          </ul>
-        </div>
-      </div>
+      <div class="spotify-list" id="spotifyList"></div>
     </div>
     
     <!-- Info Tab -->
@@ -924,7 +543,57 @@
       });
     });
   </script>
-  <script src="./js/music-list.js"></script>
-  <script src="./js/script.js"></script>
+  <script>
+    // Cập nhật music-list.js với embed URLs (giả sử đã cập nhật trong file music-list.js)
+    // Ví dụ: thêm trường spotifyEmbedUrl vào mỗi object trong allMusic
+
+    // let allMusic = [ ... với spotifyEmbedUrl: 'https://open.spotify.com/embed/track/ID?utm_source=generator&theme=0' ]
+
+    // Script để hiển thị danh sách iframe Spotify
+    const spotifyList = document.getElementById('spotifyList');
+
+    // Danh sách embed URLs từ Spotify (dựa trên tìm kiếm)
+    const embedUrls = [
+      { name: "Magnetic", artist: "ILLIT", img: "music-1", url: "https://open.spotify.com/embed/track/1aKvZDoLGkNMxoRYgkckZG?utm_source=generator&theme=0" },
+      { name: "Lucky Girl Syndrome", artist: "ILLIT", img: "music-2", url: "https://open.spotify.com/embed/track/2kIUILBPlz4exX9xIFS275?utm_source=generator&theme=0" },
+      { name: "Midnight Fiction", artist: "ILLIT", img: "music-3", url: "https://open.spotify.com/embed/track/6QqrxJe1iQxwLY6he6FLFo?utm_source=generator&theme=0" },
+      { name: "My World", artist: "ILLIT", img: "music-4", url: "https://open.spotify.com/embed/track/2Xiaplc23BureS4EDeE8xa?utm_source=generator&theme=0" },
+      { name: "Tick Tack", artist: "ILLIT", img: "music-5", url: "https://open.spotify.com/embed/track/0znsc67nMhP4X9hjhvoyeP?utm_source=generator&theme=0" },
+      { name: "Little Monster", artist: "ILLIT", img: "music-6", url: "https://open.spotify.com/embed/track/5MaPzLp2vwSqu8YyUZ4zR7?utm_source=generator&theme=0" },
+      { name: "Billyeoon Goyangi (Do the Dance)", artist: "ILLIT", img: "music-7", url: "https://open.spotify.com/embed/track/4p0uVFAXKUISu8yp9gNtWE?utm_source=generator&theme=0" },
+      { name: "Jellyous", artist: "ILLIT", img: "music-8", url: "https://open.spotify.com/embed/track/0wFU2pYHZi45Ws1VD6aSJX?utm_source=generator&theme=0" }
+    ];
+
+    embedUrls.forEach(music => {
+      const item = document.createElement('div');
+      item.className = 'spotify-item';
+
+      const img = document.createElement('img');
+      img.src = `images/${music.img}.jpg`; // Giả sử hình ảnh ở thư mục images
+      img.alt = music.name;
+
+      const title = document.createElement('h3');
+      title.textContent = music.name;
+
+      const artist = document.createElement('p');
+      artist.textContent = music.artist;
+
+      const iframe = document.createElement('iframe');
+      iframe.src = music.url;
+      iframe.style.borderRadius = '12px';
+      iframe.width = '100%';
+      iframe.height = '152';
+      iframe.frameBorder = '0';
+      iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+      iframe.loading = 'lazy';
+
+      item.appendChild(img);
+      item.appendChild(title);
+      item.appendChild(artist);
+      item.appendChild(iframe);
+
+      spotifyList.appendChild(item);
+    });
+  </script>
 </body>
 </html>
