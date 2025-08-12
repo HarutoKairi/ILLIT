@@ -274,41 +274,7 @@ body {
   position: absolute;
 }
 
-.volume-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 120px;
-}
 
-.volume-slider {
-  width: 100%;
-  height: 4px;
-  -webkit-appearance: none;
-  background: #ccc;
-  border-radius: 4px;
-  outline: none;
-}
-
-/* Style cho trình duyệt WebKit (Chrome, Safari) */
-.volume-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff;
-  cursor: pointer;
-}
-
-/* Style cho Firefox */
-.volume-slider::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff;
-  cursor: pointer;
-  border: none;
-}
 
 .music-list {
   position: absolute;
