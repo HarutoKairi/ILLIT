@@ -26,6 +26,23 @@ input, textarea, button {
   }
 }
 
+
+
+/* Fix flexbox overflow */
+.flex-container {
+  min-height: 0;
+  min-width: 0;
+}
+
+/* Fix sticky hover trên iOS */
+@media (hover: none) {
+  .hover-effect:hover {
+    /* Reset hover styles */
+  }
+}
+
+
+
 /* Hover chỉ cho desktop */
 @media (hover: hover) {
   .btn:hover { background: #ddd; }
