@@ -10,48 +10,9 @@ progressArea = wrapper.querySelector(".progress-area"),
 progressBar = progressArea.querySelector(".progress-bar"),
 musicList = wrapper.querySelector(".music-list"),
 moreMusicBtn = wrapper.querySelector("#more-music"),
-closemoreMusic = musicList.querySelector("#close");
-
-
-const playButton = document.getElementById('playButton');
-if (playButton) {
-  playButton.addEventListener('click', () => {
-    // xử lý khi nhấn nút
-  });
-}
-
-
-/*
-const btn = document.getElementById('play-btn');
-btn?.addEventListener('click', handlePlay);
-
-const btn = document.querySelector('#play-btn');
-if (btn) {
-  btn.addEventListener('click', handlePlay);
-} else {
-  console.warn('Không tìm thấy #play-btn trong DOM');
-}
-*/
-
-document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.querySelector('#play-btn');
-  if (btn) {
-    btn.addEventListener('click', handlePlay);
-  }
-});
-
-
-/*
-document.addEventListener('DOMContentLoaded', () => {
-  const playButton = document.querySelector('.play-pause');
-  if (playButton) {
-    playButton.addEventListener('click', () => {
-      // hành động khi nhấn nút phát/tạm dừng
-    });
-  }
-});
-*/
-
+closemoreMusic = musicList.querySelector("#close"),
+volumeBtn = wrapper.querySelector("#volume-btn"),
+volumeSlider = wrapper.querySelector("#volume-slider");
 
 let musicIndex = Math.floor((Math.random() * allMusic.length) + 1);
 isMusicPaused = true;
@@ -80,25 +41,13 @@ function pauseMusic(){
   mainAudio.pause();
 }
 
-
-function prevMusic() {
+function prevMusic(){
   musicIndex--;
   if (musicIndex < 1) musicIndex = allMusic.length;
   loadMusic(musicIndex);
   playMusic();
   playingSong();
 }
-
-/*
-function prevMusic(){
-  musicIndex--; 
-  musicIndex < 1 ? musicIndex = allMusic.length : musicIndex = musicIndex;
-  loadMusic(musicIndex);
-  playMusic();
-  playingSong(); 
-}
-
-*/
 
 function nextMusic(){
   musicIndex++; 
@@ -122,11 +71,9 @@ nextBtn.addEventListener("click", ()=>{
   nextMusic();
 });
 
-
-
 // Thêm một lần, bên ngoài các listener khác
 mainAudio.addEventListener("loadeddata", () => {
-  let musicDuration = wrapper.querySelector(".max-duration");  // Sửa lỗi chính tả cho rõ ràng
+  let musicDuration = wrapper.querySelector(".max-duration");
   let mainAdDuration = mainAudio.duration;
   let totalMin = Math.floor(mainAdDuration / 60);
   let totalSec = Math.floor(mainAdDuration % 60);
@@ -136,7 +83,7 @@ mainAudio.addEventListener("loadeddata", () => {
   musicDuration.innerText = `${totalMin}:${totalSec}`;
 });
 
-// Sau đó, listener timeupdate (không có loadeddata lồng)
+// Listener timeupdate
 mainAudio.addEventListener("timeupdate", (e) => {
   const currentTime = e.target.currentTime;
   const duration = e.target.duration;
@@ -152,40 +99,7 @@ mainAudio.addEventListener("timeupdate", (e) => {
   musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
 });
 
-
-
-// SỬA LỖI PHẦN PROGRESS BAR 
-/*
-mainAudio.addEventListener("timeupdate", (e)=>{
-  const currentTime = e.target.currentTime; 
-  const duration = e.target.duration; 
-  let progressWidth = (currentTime / duration) * 100;
-  progressBar.style.width = `${progressWidth}%`;
-
-  let musicCurrentTime = wrapper.querySelector(".current-time"),
-  musicDuartion = wrapper.querySelector(".max-duration");
-  mainAudio.addEventListener("loadeddata", ()=>{
-   
-    let mainAdDuration = mainAudio.duration;
-    let totalMin = Math.floor(mainAdDuration / 60);
-    let totalSec = Math.floor(mainAdDuration % 60);
-    if(totalSec < 10){ 
-      totalSec = `0${totalSec}`;
-    }
-    musicDuartion.innerText = `${totalMin}:${totalSec}`;
-  });
-  
-  let currentMin = Math.floor(currentTime / 60);
-  let currentSec = Math.floor(currentTime % 60);
-  if(currentSec < 10){ 
-    currentSec = `0${currentSec}`;
-  }
-  musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
-});
-
-*/
-
-// SỬA LỖI CLICK TRÊN PROGRESS AREA
+// Xử lý click trên progress area
 progressArea.addEventListener("click", (e)=>{
   let progressWidth = progressArea.clientWidth; 
   let clickedOffsetX = e.offsetX; 
@@ -196,7 +110,25 @@ progressArea.addEventListener("click", (e)=>{
   playingSong();
 });
 
-// PHẦN CÒN LẠI GIỮ NGUYÊN
+// Xử lý điều chỉnh âm lượng
+volumeSlider.addEventListener("input", (e) => {
+  const volume = e.target.value / 100; // Chuyển đổi từ 0-100 sang 0-1
+  mainAudio.volume = volume; // Cập nhật âm lượng của audio
+});
+
+// Xử lý nút bật/tắt âm thanh
+volumeBtn.addEventListener("click", () => {
+  if (mainAudio.volume > 0) {
+    mainAudio.volume = 0;
+    volumeSlider.value = 0;
+    volumeBtn.querySelector("i").innerText = "volume_off";
+  } else {
+    mainAudio.volume = 0.5; // Mặc định âm lượng 50%
+    volumeSlider.value = 50;
+    volumeBtn.querySelector("i").innerText = "volume_up";
+  }
+});
+
 const repeatBtn = wrapper.querySelector("#repeat-plist");
 repeatBtn.addEventListener("click", ()=>{
   let getText = repeatBtn.innerText; 
@@ -303,8 +235,6 @@ function clicked(element){
   playingSong();
 }
 
-
-
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
@@ -313,17 +243,14 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-
-
 // Xử lý chơi nhạc ở nền trên iOS
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden' && !mainAudio.paused) {
-    // Giữ audio chạy ở nền (iOS sẽ tự handle nếu là PWA)
     mainAudio.play().catch(() => {});
   }
 });
 
-// Bắt sự kiện khi màn hình tắt (dùng screen wake lock nếu hỗ trợ, nhưng iOS hạn chế)
+// Bắt sự kiện khi màn hình tắt
 if ('wakeLock' in navigator) {
   let wakeLock = null;
   const requestWakeLock = async () => {
@@ -344,6 +271,3 @@ if ('wakeLock' in navigator) {
 
 // Đảm bảo audio preload
 mainAudio.preload = 'auto';
-
-
-
