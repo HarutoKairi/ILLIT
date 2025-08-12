@@ -113,8 +113,17 @@ body {
   box-sizing: border-box;
   background: linear-gradient(135deg, #1a0933, #3c1a6d);
   color: #fff; 
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  
 }
 
+.container {
+  -webkit-overflow-scrolling: touch; /* Đã lỗi thời nhưng vẫn cần cho iOS cũ */
+  overflow: auto;
+  scroll-behavior: smooth; /* Hiện đại */
+}
 
 
 .wrapper {
