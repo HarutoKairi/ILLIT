@@ -21,22 +21,120 @@
   --darkwhite: #cecaca;
   --pinkshadow: #ffcbdd;
   --lightbshadow: rgba(0, 0, 0, 0.15);
+
+       --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+      --sar: env(safe-area-inset-right);
+      --sal: env(safe-area-inset-left);
+      --vh: 1vh; /* fallback JS */
 }
+
+
+html {
+  font-family: var(--ff-inter);
+  font-size: 10px;
+  scroll-behavior: smooth;
+}
+
+
+    html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: linear-gradient(135deg, #1a0933, #3c1a6d);
+  color: #1f1f27;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Thêm lớp container riêng */
+.main-content {
+  min-height: calc(100dvh + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  position: relative; /* để nội dung không bị đè lên particles-js */
+  z-index: 1;
+}
+
+
+
+
+
+body {
+  min-height: calc(100dvh + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #1a0933, #3c1a6d);
+  color: #fff; 
+}
+
+
+/*
 body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background: #525d70;
+  height: 100vh;
+   background: #525d70; 
+   background-color: #525d70; /*1f1f27 hoặc màu nền bạn muốn 
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  margin: 0;
 }
+*/
+/* @media (max-width: 768px) {
+  body {
+    font-size: 14px;
+    color: black;
+  }
+  .container {
+    width: 95%;
+  }
+} */
+ @media (max-width: 768px) {
+  .wrapper {
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .img-area {
+    width: 200px;
+    height: 200px;
+  }
+
+  .song-details .name {
+    font-size: 1.4rem;
+  }
+
+  .song-details .artist {
+    font-size: 1rem;
+  }
+}
+
+
+    
+
 .wrapper {
   width: 380px;
   padding: 25px 30px;
-  overflow: hidden;
+/*  overflow: hidden; */
   position: relative;
-  border-radius: 15px;
   background: #1f1f27;
-  box-shadow: 0px 6px 15px var(--lightbshadow);
+ 
+  
+/*  border-radius: 15px; 
+  box-shadow: 0px 6px 15px var(--lightbshadow);  */
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+
 }
 .wrapper i {
   cursor: pointer;
@@ -62,8 +160,10 @@ body {
 .top-bar span {
   font-size: 18px;
   margin-left: -3px;
-  color: var(--white);
+  color: #1f1f27; /* var(--white); */
 }
+
+/*
 .img-area {
   width: 100%;
   height: 256px;
@@ -71,7 +171,28 @@ body {
   margin-top: 25px;
   border-radius: 15px;
   box-shadow: 0px 6px 12px var(--lightbshadow);
+}  */
+
+.img-area {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  overflow: hidden;
+  border-radius: 25px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  background-size: cover;
+  background-position: center;
 }
+
+.img-area::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(20px);
+}
+
+
+
 .img-area img {
   width: 100%;
   height: 100%;
@@ -141,8 +262,23 @@ body {
 
 
 .controls {
+  backdrop-filter: blur(10px);
+  background: rgba(30, 30, 30, 0.4);
+  border-radius: 20px;
+  padding: 10px 15px;
+   position: fixed;
+  bottom: env(safe-area-inset-bottom);
+  left: 0;
+  width: 100%;
+}
+
+/*
+.controls {
   margin: 40px 0 5px 0;
 }
+
+*/
+
 .controls i {
   font-size: 28px;
   user-select: none;
@@ -228,9 +364,33 @@ Này là cái nút mà bấm vô sẽ hiện list nhạc í  */
   color: var(--lightback);
 }
 .music-list ul {
+
+ scroll-behavior: smooth;
+  
   margin: 10px 0;
-  max-height: 260px;
-  overflow: auto;
+/*  max-height: 100%; */
+  overflow-y: auto; /* Chỉnh sửa: Thay đổi từ overflow: auto thành overflow-y: auto để cuộn theo chiều dọc, tránh cuộn ngang nếu cần */
+  scrollbar-width: thin; /* Hiển thị thanh cuộn mỏng cho Firefox */
+  scrollbar-color: var(--violet) var(--lightback); /* Màu thanh cuộn cho Firefox */
+}
+
+/* Tùy chỉnh thanh cuộn cho WebKit browsers (Chrome, Safari) */
+.music-list ul::-webkit-scrollbar {
+  width: 8px; /* Chỉnh sửa: Thay đổi từ 0px thành 8px để hiển thị thanh cuộn */
+}
+
+.music-list ul::-webkit-scrollbar-track {
+  background: var(--lightback); /* Màu nền thanh cuộn */
+  border-radius: 10px;
+}
+
+.music-list ul::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--pink) 0%, var(--violet) 100%); /* Màu thumb với gradient */
+  border-radius: 10px;
+}
+
+.music-list ul::-webkit-scrollbar-thumb:hover {
+  background: var(--violet); /* Màu khi hover */
 }
 
 
@@ -243,9 +403,6 @@ Này là cái nút mà bấm vô sẽ hiện list nhạc í  */
 
 
 /* Do mình làm quen rùi nên nãy giờ mình CSS ước chừng thui chứ khum chính xác đâu nhe :D lát có j cần căn chỉnh thì lát mình quay lại đây he :3 */
-.music-list ul::-webkit-scrollbar {
-  width: 0px;
-}
 .music-list ul li {
   list-style: none;
   display: flex;
@@ -271,3 +428,4 @@ ul li.playing {
   pointer-events: none;
   color: var(--violet);
 }
+

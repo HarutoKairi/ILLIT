@@ -3,26 +3,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ILLIT - Music Player</title>
+ 
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- PWA hiện đại
+<link rel="manifest" href="/manifest.json">  -->
+<meta name="theme-color" content="#1f1f27">
+  
+<link rel="apple-touch-icon" href="icon.png">
+
+<!-- Toàn màn hình an toàn với notch -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Chrome/Android -->
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- Tùy chọn: iOS cũ (nếu vẫn cần) 
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> -->
+
+
+  
+  <title>ILLIT - Trình Phát Nhạc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="shortcut icon" href="./logo.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+
+/* for iOS */
+     :root{
+      --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+      --sar: env(safe-area-inset-right);
+      --sal: env(safe-area-inset-left);
+      --vh: 1vh; /* fallback JS */
+    }
+    
+
+  
+
+  
+  
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
+
+
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #1a0933;
+  backdrop-filter: blur(8px); /* Tạo hiệu ứng mờ */
+  -webkit-backdrop-filter: blur(20px); /* Cho Safari */
+  color: #fff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Thêm padding vùng notch và thanh điều hướng */
+body {
+  min-height: calc(100dvh + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  box-sizing: border-box;
+   background: linear-gradient(135deg, #1a0933, #3c1a6d);
+   color: #fff; 
+}
+
+
+
     
+    /*
     body {
-      min-height: 100vh;
+      height: 100%;
       background: linear-gradient(135deg, #1a0933, #3c1a6d);
-      color: #fff;
+      color: #fff; 
       overflow-x: hidden;
       position: relative;
     }
+*/
+    
     
     /* Hiệu ứng hạt */
     #particles-js {
@@ -31,12 +100,13 @@
       height: 100%;
       top: 0;
       left: 0;
-      z-index: -1;
+      z-index: 0;
+        pointer-events: none;
     }
     
     .container {
       max-width: 1200px;
-      margin: 0 auto;
+      margin: auto;
       padding: 20px;
     }
     
@@ -126,7 +196,7 @@
     }
     
     /* Player Tab */
-    .wrapper {
+ /*   .wrapper {
       background: rgba(30, 20, 60, 0.7);
       backdrop-filter: blur(10px);
       border-radius: 25px;
@@ -138,6 +208,29 @@
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
+*/
+
+
+
+
+
+
+    .wrapper {
+  background: rgba(30, 20, 60, 0.7);
+  backdrop-filter: blur(8px);
+  border-radius: 25px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 25px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: auto;  /* Tăng min-height để wrapper cao hơn, hiển thị được ~12-15 bài mà không cuộn nhiều */
+}
+
+
+    
     
     .top-bar {
       display: flex;
@@ -366,7 +459,7 @@
     }
     
     /* Music List */
-    .music-list {
+/*    .music-list {
       position: absolute;
       background: rgba(30, 20, 60, 0.95);
       backdrop-filter: blur(10px);
@@ -381,6 +474,26 @@
       z-index: 10;
       overflow-y: auto;
     }
+
+*/
+
+    .music-list {
+  position: absolute;
+  background: rgba(42, 36, 63, 0.5);  /* rgb(42 36 63 / 50%) */
+  backdrop-filter: blur(10px);
+  width: 100%;
+  /* height: 600px;  Đổi từ 100% thành auto để tự mở rộng theo nội dung 
+ min-height: auto;   Đảm bảo ít nhất bằng parent */
+  top: 0;
+  left: 0;
+  border-radius: 25px;
+  padding: 25px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 10;
+  overflow-y: auto;  /* Giữ cuộn nếu quá dài */
+  max-height: 100%;  /* Giới hạn tối đa để tránh tràn màn hình, điều chỉnh theo nhu cầu */
+}
     
     .music-list.show {
       transform: translateX(0);
@@ -422,6 +535,11 @@
     
     .music-list ul {
       list-style: none;
+
+      max-height: 100%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+    
     }
     
     .music-list ul li {
@@ -692,10 +810,10 @@
     }
     
     .volume-control input[type="range"] {
-      width: 100px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
+      width: 200px;
+      height: 8px;
+      background: rgb(255 255 255 / 25%);
+      border-radius: 20px;
       outline: none;
       cursor: pointer;
       appearance: none;
@@ -711,6 +829,12 @@
   </style>
 </head>
 <body>
+
+<div class="main-content">
+    <!-- Nội dung chính -->
+  </div>
+  
+  
   <!-- Hiệu ứng hạt -->
   <div id="particles-js"></div>
   
@@ -718,6 +842,7 @@
     <header>
       <h1 class="logo">ILLIT</h1>
       <p class="subtitle">Music Player</p>
+      <p class="beta">Hiện đang trong quá trình thử nghiệm sẽ có 1 lỗi số sẽ xảy ra</p>
     </header>
     
     <div class="tabs">
@@ -804,7 +929,8 @@
           </div>
           <div class="member-info">
             <h3>Yunah</h3>
-            <div class="position">Main Vocalist</div>
+            <div class="position">Main Dancer, Lead Vocalist</div>
+            <div class="country">🇰🇷</div>
             <div class="birthdate">15/01/2004</div>
           </div>
         </div>
@@ -815,7 +941,8 @@
           </div>
           <div class="member-info">
             <h3>Minju</h3>
-            <div class="position">Lead Vocalist</div>
+            <div class="position">Main Vocalist, Lead Rapper, Dancer, Center</div>
+            <div class="country">🇰🇷</div>
             <div class="birthdate">11/05/2004</div>
           </div>
         </div>
@@ -826,7 +953,8 @@
           </div>
           <div class="member-info">
             <h3>Moka</h3>
-            <div class="position">Lead Dancer</div>
+            <div class="position">Lead Dancer, Main Rapper, Visual</div>
+            <div class="country">🇯🇵</div>
             <div class="birthdate">08/10/2004</div>
           </div>
         </div>
@@ -837,7 +965,8 @@
           </div>
           <div class="member-info">
             <h3>Wonhee</h3>
-            <div class="position">Lead Dancer, Vocalist</div>
+            <div class="position">Lead Vocalist, Face of the group, Center</div>
+            <div class="country">🇰🇷</div>
             <div class="birthdate">26/06/2007</div>
           </div>
         </div>
@@ -848,7 +977,8 @@
           </div>
           <div class="member-info">
             <h3>Iroha</h3>
-            <div class="position">Main Dancer, Maknae</div>
+            <div class="position">Main Dancer, Main Vocalist, Maknae</div>
+            <div class="country">🇯🇵</div>
             <div class="birthdate">04/02/2008</div>
           </div>
         </div>
@@ -856,15 +986,15 @@
         
         <div class="designer-info">
           <h2>Tác giả thiết kế</h2>
-          <p>Haruto Kairi (chieunguyen2002)</p>
-          <p>Thiết kế trình phát nhạc ILLIT với hiệu ứng hạt nền động</p>
+          <p>Haruto Kairi (Tiktok: chieunguyen2002)</p>
+          <p>Thiết kế trình phát nhạc ILLIT</p>
         </div>
       </div>
     </div>
   </div>
   
-  <!-- ILLIT effect overlay -->
-  <div class="illit-effect"></div>
+  <!-- ILLIT effect overlay 
+  <div class="illit-effect"></div> -->
 
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
@@ -1004,6 +1134,9 @@
     });
     document.body.appendChild(clearCacheBtn);
   </script>
+
+
+
   <script src="./js/music-list.js"></script>
   <script src="./js/script.js"></script>
 </body>

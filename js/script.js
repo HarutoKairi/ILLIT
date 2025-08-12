@@ -12,6 +12,47 @@ musicList = wrapper.querySelector(".music-list"),
 moreMusicBtn = wrapper.querySelector("#more-music"),
 closemoreMusic = musicList.querySelector("#close");
 
+
+const playButton = document.getElementById('playButton');
+if (playButton) {
+  playButton.addEventListener('click', () => {
+    // xử lý khi nhấn nút
+  });
+}
+
+
+/*
+const btn = document.getElementById('play-btn');
+btn?.addEventListener('click', handlePlay);
+
+const btn = document.querySelector('#play-btn');
+if (btn) {
+  btn.addEventListener('click', handlePlay);
+} else {
+  console.warn('Không tìm thấy #play-btn trong DOM');
+}
+*/
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('#play-btn');
+  if (btn) {
+    btn.addEventListener('click', handlePlay);
+  }
+});
+
+
+/*
+document.addEventListener('DOMContentLoaded', () => {
+  const playButton = document.querySelector('.play-pause');
+  if (playButton) {
+    playButton.addEventListener('click', () => {
+      // hành động khi nhấn nút phát/tạm dừng
+    });
+  }
+});
+*/
+
+
 let musicIndex = Math.floor((Math.random() * allMusic.length) + 1);
 isMusicPaused = true;
 
@@ -39,6 +80,16 @@ function pauseMusic(){
   mainAudio.pause();
 }
 
+
+function prevMusic() {
+  musicIndex--;
+  if (musicIndex < 1) musicIndex = allMusic.length;
+  loadMusic(musicIndex);
+  playMusic();
+  playingSong();
+}
+
+/*
 function prevMusic(){
   musicIndex--; 
   musicIndex < 1 ? musicIndex = allMusic.length : musicIndex = musicIndex;
@@ -46,6 +97,8 @@ function prevMusic(){
   playMusic();
   playingSong(); 
 }
+
+*/
 
 function nextMusic(){
   musicIndex++; 
@@ -69,7 +122,40 @@ nextBtn.addEventListener("click", ()=>{
   nextMusic();
 });
 
-// SỬA LỖI PHẦN PROGRESS BAR
+
+
+// Thêm một lần, bên ngoài các listener khác
+mainAudio.addEventListener("loadeddata", () => {
+  let musicDuration = wrapper.querySelector(".max-duration");  // Sửa lỗi chính tả cho rõ ràng
+  let mainAdDuration = mainAudio.duration;
+  let totalMin = Math.floor(mainAdDuration / 60);
+  let totalSec = Math.floor(mainAdDuration % 60);
+  if (totalSec < 10) {
+    totalSec = `0${totalSec}`;
+  }
+  musicDuration.innerText = `${totalMin}:${totalSec}`;
+});
+
+// Sau đó, listener timeupdate (không có loadeddata lồng)
+mainAudio.addEventListener("timeupdate", (e) => {
+  const currentTime = e.target.currentTime;
+  const duration = e.target.duration;
+  let progressWidth = (currentTime / duration) * 100;
+  progressBar.style.width = `${progressWidth}%`;
+
+  let musicCurrentTime = wrapper.querySelector(".current-time");
+  let currentMin = Math.floor(currentTime / 60);
+  let currentSec = Math.floor(currentTime % 60);
+  if (currentSec < 10) {
+    currentSec = `0${currentSec}`;
+  }
+  musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
+});
+
+
+
+// SỬA LỖI PHẦN PROGRESS BAR 
+/*
 mainAudio.addEventListener("timeupdate", (e)=>{
   const currentTime = e.target.currentTime; 
   const duration = e.target.duration; 
@@ -97,6 +183,7 @@ mainAudio.addEventListener("timeupdate", (e)=>{
   musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
 });
 
+*/
 
 // SỬA LỖI CLICK TRÊN PROGRESS AREA
 progressArea.addEventListener("click", (e)=>{
@@ -174,6 +261,7 @@ for (let i = 0; i < allMusic.length; i++) {
 
   let liAudioDurationTag = ulTag.querySelector(`#${allMusic[i].src}`);
   let liAudioTag = ulTag.querySelector(`.${allMusic[i].src}`);
+  
   liAudioTag.addEventListener("loadeddata", ()=>{
     let duration = liAudioTag.duration;
     let totalMin = Math.floor(duration / 60);
@@ -214,3 +302,48 @@ function clicked(element){
   playMusic();
   playingSong();
 }
+
+
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('Service Worker registered', reg))
+      .catch(err => console.log('Service Worker registration failed', err));
+  });
+}
+
+
+
+// Xử lý chơi nhạc ở nền trên iOS
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden' && !mainAudio.paused) {
+    // Giữ audio chạy ở nền (iOS sẽ tự handle nếu là PWA)
+    mainAudio.play().catch(() => {});
+  }
+});
+
+// Bắt sự kiện khi màn hình tắt (dùng screen wake lock nếu hỗ trợ, nhưng iOS hạn chế)
+if ('wakeLock' in navigator) {
+  let wakeLock = null;
+  const requestWakeLock = async () => {
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => {
+        console.log('Wake Lock released');
+      });
+    } catch (err) {
+      console.error('Wake Lock failed:', err);
+    }
+  };
+
+  mainAudio.addEventListener('play', requestWakeLock);
+} else {
+  console.warn('Wake Lock API not supported (common on iOS)');
+}
+
+// Đảm bảo audio preload
+mainAudio.preload = 'auto';
+
+
+
