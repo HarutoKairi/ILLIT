@@ -14,6 +14,15 @@ closemoreMusic = musicList.querySelector("#close");
 
 
 
+// Modernizr-style feature detection
+if ('CSS' in window && 'supports' in window.CSS) {
+  document.documentElement.classList.add('css-vars');
+}
+
+if ('ontouchstart' in window) {
+  document.documentElement.classList.add('touch-device');
+}
+
 
 
 
