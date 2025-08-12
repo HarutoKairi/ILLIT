@@ -796,6 +796,8 @@ body {
     }
     
     /* Volume control */
+
+    /*
     .volume-control {
       display: flex;
       align-items: center;
@@ -826,6 +828,9 @@ body {
       background: #ff6ec4;
       border-radius: 50%;
     }
+
+*/
+    
   </style>
 </head>
 <body>
@@ -891,11 +896,15 @@ body {
           <i id="next" class="material-icons" >skip_next</i>
           <i id="more-music" class="material-icons" >queue_music</i>
         </div>
-        
-        <div class="volume-control">
-          <i class="material-icons">volume_up</i>
-          <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
-        </div>
+
+
+        <div class="volume-container">
+  <i class="material-icons volume-icon">volume_up</i>
+  <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+</div>
+
+
+      
 
         <div class="music-list">
           <div class="header">
