@@ -14,6 +14,38 @@ closemoreMusic = musicList.querySelector("#close");
 
 
 
+
+
+// Splash Screen Functionality
+const splashScreen = document.getElementById('splashScreen');
+const splashProgress = document.getElementById('splashProgress');
+const mainContent = document.querySelector('.main-content');
+
+// Simulate loading progress
+let progress = 0;
+const interval = setInterval(() => {
+  progress += Math.floor(Math.random() * 15);
+  if (progress >= 100) {
+    progress = 100;
+    clearInterval(interval);
+    
+    // Hide splash screen after 500ms
+    setTimeout(() => {
+      splashScreen.style.opacity = '0';
+      splashScreen.style.visibility = 'hidden';
+      
+      // Show main content
+      mainContent.classList.add('show');
+    }, 500);
+  }
+  splashProgress.style.width = progress + '%';
+}, 200);
+
+
+
+
+
+
 // Modernizr-style feature detection
 if ('CSS' in window && 'supports' in window.CSS) {
   document.documentElement.classList.add('css-vars');
