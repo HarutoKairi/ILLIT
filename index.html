@@ -1,121 +1,1074 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#3c1a6d" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>ILLIT</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icon.png" type="image/png" />
-</head>
-<body>
-  <div class="main-content">
-    <div class="wrapper">
-      <div class="top-bar">
-        <i class="material-icons">expand_more</i>
-        <span>Đang phát bài</span>
-        <i class="material-icons">more_horiz</i>
-      </div>
-      <div class="img-area">
-        <img src="" alt="" />
-      </div>
-      <div class="song-details">
-        <p class="name"></p>
-        <p class="artist"></p>
-      </div>
-      <div class="progress-area">
-        <div class="progress-bar"></div>
-        <audio id="main-audio"></audio>
-        <div class="song-timer">
-          <span class="current-time">0:00</span>
-          <span class="max-duration">1:00</span>
-        </div>
-      </div>
-      <div class="controls">
-        <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
-        <i id="prev" class="material-icons">skip_previous</i>
-        <div class="play-pause">
-          <i class="material-icons">play_arrow</i>
-        </div>
-        <i id="next" class="material-icons">skip_next</i>
-        <div class="volume-control">
-          <i id="volume-btn" class="material-icons">volume_up</i>
-          <input type="range" id="volume-slider" min="0" max="100" value="50" />
-        </div>
-      </div>
-      <div class="music-list">
-        <div class="header">
-          <div class="row">
-            <i class="material-icons">queue_music</i>
-            <span>Danh sách bài hát</span>
-          </div>
-          <i id="close" class="material-icons">close</i>
-        </div>
-        <ul></ul>
-      </div>
-    </div>
-    <div class="info-section">
-      <h2>Thông tin nhóm ILLIT</h2>
-      <p>ILLIT là nhóm nhạc nữ Hàn Quốc được thành lập bởi BELIFT LAB, một liên doanh giữa HYBE và CJ ENM. Nhóm ra mắt vào tháng 3 năm 2024 với mini-album đầu tay "SUPER REAL ME".</p>
-      <p>ILLIT nổi tiếng với phong cách âm nhạc tươi mới, trẻ trung kết hợp với hình ảnh độc đáo và đầy cá tính. Bài hát "Magnetic" đã nhanh chóng trở thành hit trên các bảng xếp hạng âm nhạc toàn cầu.</p>
-      <p>Với sự kết hợp hoàn hảo giữa giọng hát, vũ đạo sáng tạo và hình ảnh đẹp mắt, ILLIT đang nhanh chóng trở thành một trong những nhóm nhạc nữ hàng đầu của K-Pop thế hệ mới.</p>
-      <div class="member">
-        <img src="images/yunah.jpg" alt="Yunah" />
-        <div class="member-info">
-          <h3>Yunah</h3>
-          <p>Main Dancer, Lead Vocalist</p>
-          <p>🇰🇷</p>
-          <p>15/01/2004</p>
-        </div>
-      </div>
-      <div class="member">
-        <img src="images/minju.jpg" alt="Minju" />
-        <div class="member-info">
-          <h3>Minju</h3>
-          <p>Main Vocalist, Lead Rapper, Dancer, Center</p>
-          <p>🇰🇷</p>
-          <p>11/05/2004</p>
-        </div>
-      </div>
-      <div class="member">
-        <img src="images/moka.jpg" alt="Moka" />
-        <div class="member-info">
-          <h3>Moka</h3>
-          <p>Lead Dancer, Main Rapper, Visual</p>
-          <p>🇯🇵</p>
-          <p>08/10/2004</p>
-        </div>
-      </div>
-      <div class="member">
-        <img src="images/wonhee.jpg" alt="Wonhee" />
-        <div class="member-info">
-          <h3>Wonhee</h3>
-          <p>Lead Vocalist, Face of the group, Center</p>
-          <p>🇰🇷</p>
-          <p>26/06/2007</p>
-        </div>
-      </div>
-      <div class="member">
-        <img src="images/iroha.jpg" alt="Iroha" />
-        <div class="member-info">
-          <h3>Iroha</h3>
-          <p>Main Dancer, Main Vocalist, Maknae</p>
-          <p>🇯🇵</p>
-          <p>04/02/2008</p>
-        </div>
-      </div>
-      <div class="author">
-        <h3>Tác giả thiết kế</h3>
-        <p>Haruto Kairi (Tiktok: chieunguyen2002)</p>
-        <p>Thiết kế trình phát nhạc ILLIT</p>
-      </div>
-    </div>
-  </div>
-  <script src="music-list.js"></script>
-  <script src="script.js"></script>
-</body>
-</html>
+<DOCUMENT filename="manifest.json">
+{
+  "name": "ILLIT Music Player",
+  "short_name": "ILLIT Player",
+  "description": "ILLIT",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1a0933",
+  "theme_color": "#3c1a6d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "png"
+    }
+  ]
+}
+</DOCUMENT>
+
+<DOCUMENT filename="index.html">
+
+
+
+    
+  
+
+  
+  
+  
+  
+
+  
+  
+    
+      ILLIT
+
+      Music Player
+
+      Hiện đang trong quá trình thử nghiệm sẽ có 1 lỗi số sẽ xảy ra
+
+    
+    
+    
+      Music Player
+      Thông tin nhóm
+    
+
+    
+    
+    
+      
+        
+          expand_more
+          Đang phát bài
+          more_horiz
+        
+
+
+        
+          
+        
+
+
+        
+          
+
+          
+
+        
+
+
+
+        
+               
+          
+            
+            
+
+          
+
+          
+            0:00
+            1:00
+          
+
+        
+
+
+
+        
+          repeat
+          skip_previous
+          
+            play_arrow
+          
+
+          skip_next
+          queue_music
+          volume_up
+          <input type="range" id="volume-slider" min="0" max="100" value="100" step="1">
+        
+
+        
+        
+          volume_up
+          
+        
+
+
+        
+          
+            
+              queue_music
+              Danh sách bài hát
+            
+
+            close
+          
+
+          
+
+        
+
+      
+
+    
+
+    
+    
+    
+      
+        
+          Thông tin nhóm ILLIT
+
+          ILLIT là nhóm nhạc nữ Hàn Quốc được thành lập bởi BELIFT LAB, một liên doanh giữa HYBE và CJ ENM. Nhóm ra mắt vào tháng 3 năm 2024 với mini-album đầu tay "SUPER REAL ME".
+
+          ILLIT nổi tiếng với phong cách âm nhạc tươi mới, trẻ trung kết hợp với hình ảnh độc đáo và đầy cá tính. Bài hát "Magnetic" đã nhanh chóng trở thành hit trên các bảng xếp hạng âm nhạc toàn cầu.
+
+          Với sự kết hợp hoàn hảo giữa giọng hát, vũ đạo sáng tạo và hình ảnh đẹp mắt, ILLIT đang nhanh chóng trở thành một trong những nhóm nhạc nữ hàng đầu của K-Pop thế hệ mới.
+
+        
+
+        
+          
+        
+          
+            
+          
+
+          
+            Yunah
+
+            Main Dancer, Lead Vocalist
+
+            🇰🇷
+
+            15/01/2004
+
+          
+
+        
+
+        
+        
+          
+            
+          
+
+          
+            Minju
+
+            Main Vocalist, Lead Rapper, Dancer, Center
+
+            🇰🇷
+
+            11/05/2004
+
+          
+
+        
+
+        
+        
+          
+            
+          
+
+          
+            Moka
+
+            Lead Dancer, Main Rapper, Visual
+
+            🇯🇵
+
+            08/10/2004
+
+          
+
+        
+
+        
+        
+          
+            
+          
+
+          
+            Wonhee
+
+            Lead Vocalist, Face of the group, Center
+
+            🇰🇷
+
+            26/06/2007
+
+          
+
+        
+
+        
+        
+          
+            
+          
+
+          
+            Iroha
+
+            Main Dancer, Main Vocalist, Maknae
+
+            🇯🇵
+
+            04/02/2008
+
+          
+
+        
+
+      
+
+        
+        
+          Tác giả thiết kế
+
+          Haruto Kairi (Tiktok: chieunguyen2002)
+
+          Thiết kế trình phát nhạc ILLIT
+
+        
+
+      
+
+    
+
+  
+
+  
+  
+
+  
+  
+
+
+
+  
+  
+</DOCUMENT>
+
+<DOCUMENT filename="style.css">
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,600&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+}
+/* Keke có font Poppins vô xịn hẵn mn hen :D */
+
+/* Ở đây mình sẽ gán màu cho các biến, để code css mình dùng sẽ clean hơn, đỡ phải nhớ mã màu :D */
+:root {
+  --pink: #ff74a4;
+  --violet: #9f6ea3;
+  --lightback: #515c6f;
+  --white: #fff;
+  --darkwhite: #cecaca;
+  --pinkshadow: #ffcbdd;
+  --lightbshadow: rgba(0, 0, 0, 0.15);
+
+       --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+      --sar: env(safe-area-inset-right);
+      --sal: env(safe-area-inset-left);
+      --vh: 1vh; /* fallback JS */
+}
+
+
+html {
+  font-family: var(--ff-inter);
+  font-size: 10px;
+  scroll-behavior: smooth;
+}
+
+
+    html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: linear-gradient(135deg, #1a0933, #3c1a6d);
+  color: #1f1f27;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Thêm lớp container riêng */
+.main-content {
+  min-height: calc(100dvh + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  position: relative; /* để nội dung không bị đè lên particles-js */
+  z-index: 1;
+}
+
+
+
+
+
+body {
+  min-height: calc(100dvh + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #1a0933, #3c1a6d);
+  color: #fff; 
+}
+
+
+/*
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+   background: #525d70; 
+   background-color: #525d70; /*1f1f27 hoặc màu nền bạn muốn 
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  margin: 0;
+}
+*/
+/* @media (max-width: 768px) {
+  body {
+    font-size: 14px;
+    color: black;
+  }
+  .container {
+    width: 95%;
+  }
+} */
+ @media (max-width: 768px) {
+  .wrapper {
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .img-area {
+    width: 200px;
+    height: 200px;
+  }
+
+  .song-details .name {
+    font-size: 1.4rem;
+  }
+
+  .song-details .artist {
+    font-size: 1rem;
+  }
+}
+
+
+    
+
+.wrapper {
+  width: 380px;
+  padding: 25px 30px;
+/*  overflow: hidden; */
+  position: relative;
+  background: #1f1f27;
+ 
+  
+/*  border-radius: 15px; 
+  box-shadow: 0px 6px 15px var(--lightbshadow);  */
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+
+}
+.wrapper i {
+  cursor: pointer;
+}
+.top-bar,
+.progress-bar .song-timer,
+.controls,
+.music-list .header,
+.music-list ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* sức mạnh của Flexbox :D Các bạn nào chưa x...(truncated 2447 characters)...
+  margin-left: -13px;
+}
+.controls .play-pause {
+  height: 54px;
+  width: 54px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(var(--white) 0%, var(--darkwhite) 100%);
+  box-shadow: 0px 0px 5px var(--pink);
+}
+.play-pause::before {
+  position: absolute;
+  content: "";
+  height: 43px;
+  width: 43px;
+  border-radius: inherit;
+  background: linear-gradient(var(--pink) 0%, var(--violet) 100%);
+}
+.play-pause i {
+  height: 43px;
+  width: 43px;
+  line-height: 43px;
+  text-align: center;
+  background: inherit;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: absolute;
+}
+
+.music-list {
+  position: absolute;
+  background: var(--white);
+  width: 100%;
+  left: 0;
+  bottom: -55%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  padding: 15px 30px;
+  border-radius: 15px;
+  box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.15s ease-out;
+}
+/* Này mình CSS sẵn henn, do lát có thêm Js thì các bạn mới thấy rõ đc phần này :D 
+Này là cái nút mà bấm vô sẽ hiện list nhạc í  */
+.music-list.show {
+  bottom: 0;
+  opacity: 1;
+  pointer-events: auto;
+}
+.header .row {
+  display: flex;
+  align-items: center;
+  font-size: 19px;
+  color: var(--lightback);
+    flex-wrap: wrap;
+}
+.header .row i {
+  cursor: default;
+}
+.header .row span {
+  margin-left: 5px;
+}
+.header #close {
+  font-size: 22px;
+  color: var(--lightback);
+}
+.music-list ul {
+
+ scroll-behavior: smooth;
+  
+  margin: 10px 0;
+/*  max-height: 100%; */
+  overflow-y: auto; /* Chỉnh sửa: Thay đổi từ overflow: auto thành overflow-y: auto để cuộn theo chiều dọc, tránh cuộn ngang nếu cần */
+  scrollbar-width: thin; /* Hiển thị thanh cuộn mỏng cho Firefox */
+  scrollbar-color: var(--violet) var(--lightback); /* Màu thanh cuộn cho Firefox */
+}
+
+/* Tùy chỉnh thanh cuộn cho WebKit browsers (Chrome, Safari) */
+.music-list ul::-webkit-scrollbar {
+  width: 8px; /* Chỉnh sửa: Thay đổi từ 0px thành 8px để hiển thị thanh cuộn */
+}
+
+.music-list ul::-webkit-scrollbar-track {
+  background: var(--lightback); /* Màu nền thanh cuộn */
+  border-radius: 10px;
+}
+
+.music-list ul::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--pink) 0%, var(--violet) 100%); /* Màu thumb với gradient */
+  border-radius: 10px;
+}
+
+.music-list ul::-webkit-scrollbar-thumb:hover {
+  background: var(--violet); /* Màu khi hover */
+}
+
+
+
+  .separator {
+    margin: 0 5px;
+    color: #a29ebd;
+  }
+
+
+
+/* Do mình làm quen rùi nên nãy giờ mình CSS ước chừng thui chứ khum chính xác đâu nhe :D lát có j cần căn chỉnh thì lát mình quay lại đây he :3 */
+.music-list ul li {
+  list-style: none;
+  display: flex;
+  cursor: pointer;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  color: var(--lightback);
+  border-bottom: 1px solid #e5e5e5;
+}
+.music-list ul li:last-child {
+  border-bottom: 0px;
+}
+.music-list ul li .row span {
+  font-size: 17px;
+}
+.music-list ul li .row p {
+  opacity: 0.9;
+}
+ul li .audio-duration {
+  font-size: 16px;
+}
+ul li.playing {
+  pointer-events: none;
+  color: var(--violet);
+}
+
+#volume-slider {
+  width: 100px;
+  height: 5px;
+  -webkit-appearance: none;
+  background: var(--lightback);
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+#volume-slider:hover {
+  opacity: 1;
+}
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--pink);
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+#volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: var(--pink);
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+</DOCUMENT>
+
+<DOCUMENT filename="sw.js">
+// sw.js
+const CACHE_NAME = 'illit-player-cache-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/style.css',
+  '/script.js',
+  '/music-list.js',
+  // Thêm tất cả file nhạc và hình ảnh (liệt kê thủ công)
+  '/songs/music-1.mp3',
+  '/songs/music-2.mp3',
+  // ... thêm hết các file .mp3 và .jpg từ music-list.js
+  '/images/music-1.jpg',
+  '/images/music-2.jpg',
+  // ... thêm hết
+];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
+
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request)
+      .then((response) => {
+        return response || fetch(event.request);
+      })
+  );
+});
+</DOCUMENT>
+
+<DOCUMENT filename="script.js">
+const wrapper = document.querySelector(".wrapper"),
+musicImg = wrapper.querySelector(".img-area img"),
+musicName = wrapper.querySelector(".song-details .name"),
+musicArtist = wrapper.querySelector(".song-details .artist"),
+playPauseBtn = wrapper.querySelector(".play-pause"),
+prevBtn = wrapper.querySelector("#prev"),
+nextBtn = wrapper.querySelector("#next"),
+mainAudio = wrapper.querySelector("#main-audio"),
+progressArea = wrapper.querySelector(".progress-area"),
+progressBar = progressArea.querySelector(".progress-bar"),
+musicList = wrapper.querySelector(".music-list"),
+moreMusicBtn = wrapper.querySelector("#more-music"),
+closemoreMusic = musicList.querySelector("#close"),
+volumeSlider = wrapper.querySelector("#volume-slider");
+
+
+const playButton = document.getElementById('playButton');
+if (playButton) {
+  playButton.addEventListener('click', () => {
+    // xử lý khi nhấn nút
+  });
+}
+
+
+/*
+const btn = document.getElementById('play-btn');
+btn?.addEventListener('click', handlePlay);
+
+const btn = document.querySelector('#play-btn');
+if (btn) {
+  btn.addEventListener('click', handlePlay);
+} else {
+  console.warn('Không tìm thấy #play-btn trong DOM');
+}
+*/
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('#play-btn');
+  if (btn) {
+    btn.addEventListener('click', handlePlay);
+  }
+});
+
+
+/*
+document.addEventListener('DOMContentLoaded', () => {
+  const playButton = document.querySelector('.play-pause');
+  if (playButton) {
+    playButton.addEventListener('click', () => {
+      // hành động khi nhấn nút phát/tạm dừng
+    });
+  }
+});
+*/
+
+
+let musicIndex = Math.floor((Math.random() * allMusic.length) + 1);
+isMusicPaused = true;
+
+window.addEventListener("load", ()=>{
+  loadMusic(musicIndex);
+  playingSong(); 
+});
+
+function loadMusic(indexNumb){
+  musicName.innerText = allMusic[indexNumb - 1].name;
+  musicArtist.innerText = allMusic[indexNumb - 1].artist;
+  musicImg.src = `images/${allMusic[indexNumb - 1].src}.jpg`;
+  mainAudio.src = `songs/${allMusic[indexNumb - 1].src}.mp3`;
+}
+
+function playMusic(){
+  wrapper.classList.add("paused");
+  playPauseBtn.querySelector("i").innerText = "pause";
+  mainAudio.play();
+}
+
+function pauseMusic(){
+  wrapper.classList.remove("paused");
+  playPauseBtn.querySelector("i").innerText = "play_arrow";
+  mainAudio.pause();
+}
+
+
+function prevMusic() {
+  musicIndex--;
+  if (musicIndex < 1) musicIndex = allMusic.length;
+  loadMusic(musicIndex);
+  playMusic();
+  playingSong();
+}
+
+/*
+function prevMusic(){
+  musicIndex--; 
+  musicIndex < 1 ? musicIndex = allMusic.length : musicIndex = musicIndex;
+  loadMusic(musicIndex);
+  playMusic();
+  playingSong(); 
+}
+
+*/
+
+function nextMusic(){
+  musicIndex++; 
+  musicIndex > allMusic.length ? musicIndex = 1 : musicIndex = musicIndex;
+  loadMusic(musicIndex);
+  playMusic();
+  playingSong(); 
+}
+
+playPauseBtn.addEventListener("click", ()=>{
+  const isMusicPlay = wrapper.classList.contains("paused");
+  isMusicPlay ? pauseMusic() : playMusic();
+  playingSong();
+});
+
+prevBtn.addEventListener("click", ()=>{
+  prevMusic();
+});
+
+nextBtn.addEventListener("click", ()=>{
+  nextMusic();
+});
+
+
+
+// Thêm một lần, bên ngoài các listener khác
+mainAudio.addEventListener("loadeddata", () => {
+  let musicDuration = wrapper.querySelector(".max-duration");  // Sửa lỗi chính tả cho rõ ràng
+  let mainAdDuration = mainAudio.duration;
+  let totalMin = Math.floor(mainAdDuration / 60);
+  let totalSec = Math.floor(mainAdDuration % 60);
+  if (totalSec < 10) {
+    totalSec = `0${totalSec}`;
+  }
+  musicDuration.innerText = `${totalMin}:${totalSec}`;
+});
+
+// Sau đó, listener timeupdate (không có loadeddata lồng)
+mainAudio.addEventListener("timeupdate", (e) => {
+  const currentTime = e.target.currentTime;
+  const duration = e.target.duration;
+  let progressWidth = (currentTime / duration) * 100;
+  progressBar.style.width = `${progressWidth}%`;
+
+  let musicCurrentTime = wrapper.querySelector(".current-time");
+  let currentMin = Math.floor(currentTime / 60);
+  let currentSec = Math.floor(currentTime % 60);
+  if (currentSec < 10) {
+    currentSec = `0${currentSec}`;
+  }
+  musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
+});
+
+// Xử lý click trên progress area
+progressArea.addEventListener("click", (e)=>{
+  let progressWidth = progressArea.clientWidth; 
+  let clickedOffsetX = e.offsetX; 
+  let songDuration = mainAudio.duration; 
+  
+  mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+  playMusic(); 
+  playingSong();
+});
+
+// Xử lý âm lượng
+volumeSlider.addEventListener("input", ()=>{
+  mainAudio.volume = volumeSlider.value / 100;
+});
+
+const repeatBtn = wrapper.querySelector("#repeat-plist");
+repeatBtn.addEventListener("click", ()=>{
+  let getText = repeatBtn.innerText; 
+  switch(getText){
+    case "repeat":
+      repeatBtn.innerText = "repeat_one";
+      repeatBtn.setAttribute("title", "Song looped");
+      break;
+    case "repeat_one":
+      repeatBtn.innerText = "shuffle";
+      repeatBtn.setAttribute("title", "Playback shuffled");
+      break;
+    case "shuffle":
+      repeatBtn.innerText = "repeat";
+      repeatBtn.setAttribute("title", "Playlist looped");
+      break;
+  }
+});
+
+mainAudio.addEventListener("ended", ()=>{
+  let getText = repeatBtn.innerText; 
+  switch(getText){
+    case "repeat":
+      nextMusic();
+      break;
+    case "repeat_one":
+      mainAudio.currentTime = 0; 
+      loadMusic(musicIndex); 
+      playMusic(); 
+      break;
+    case "shuffle":
+      let randIndex = Math.floor((Math.random() * allMusic.length) + 1); 
+      do{
+        randIndex = Math.floor((Math.random() * allMusic.length) + 1);
+      }while(musicIndex == randIndex); 
+      musicIndex = randIndex; 
+      loadMusic(musicIndex);
+      playMusic();
+      playingSong();
+      break;
+  }
+});
+
+moreMusicBtn.addEventListener("click", ()=>{
+  musicList.classList.toggle("show");
+});
+closemoreMusic.addEventListener("click", ()=>{
+  moreMusicBtn.click();
+});
+
+const ulTag = wrapper.querySelector("ul");
+
+for (let i = 0; i < allMusic.length; i++) {
+  let liTag = `<li li-index="${i + 1}">
+                <div class="row">
+                  <span>${allMusic[i].name}</span>
+                </div>
+                <span id="${allMusic[i].src}" class="audio-duration"></span>
+                <audio class="${allMusic[i].src}" src="songs/${allMusic[i].src}.mp3"></audio>
+              </li>`;
+  ulTag.insertAdjacentHTML("beforeend", liTag); 
+
+  let liAudioDurationTag = ulTag.querySelector(`#${allMusic[i].src}`);
+  let liAudioTag = ulTag.querySelector(`.${allMusic[i].src}`);
+  
+  liAudioTag.addEventListener("loadeddata", ()=>{
+    let duration = liAudioTag.duration;
+    let totalMin = Math.floor(duration / 60);
+    let totalSec = Math.floor(duration % 60);
+    if(totalSec < 10){ 
+      totalSec = `0${totalSec}`;
+    };
+    liAudioDurationTag.innerText = `${totalMin}:${totalSec}`; 
+    liAudioDurationTag.setAttribute("t-duration", `${totalMin}:${totalSec}`); 
+  });
+}
+
+function playingSong(){
+  const allLiTag = ulTag.querySelectorAll("li");
+  
+  for (let j = 0; j < allLiTag.length; j++) {
+    let audioTag = allLiTag[j].querySelector(".audio-duration");
+    
+    if(allLiTag[j].classList.contains("playing")){
+      allLiTag[j].classList.remove("playing");
+      let adDuration = audioTag.getAttribute("t-duration");
+      audioTag.innerText = adDuration;
+    }
+    
+    if(allLiTag[j].getAttribute("li-index") == musicIndex){
+      allLiTag[j].classList.add("playing");
+      audioTag.innerText = "Playing";
+    }
+
+    allLiTag[j].setAttribute("onclick", "clicked(this)");
+  }
+}
+
+function clicked(element){
+  let getLiIndex = element.getAttribute("li-index");
+  musicIndex = getLiIndex;
+  loadMusic(musicIndex);
+  playMusic();
+  playingSong();
+}
+
+
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('Service Worker registered', reg))
+      .catch(err => console.log('Service Worker registration failed', err));
+  });
+}
+
+
+
+// Xử lý chơi nhạc ở nền trên iOS
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden' && !mainAudio.paused) {
+    // Giữ audio chạy ở nền (iOS sẽ tự handle nếu là PWA)
+    mainAudio.play().catch(() => {});
+  }
+});
+
+// Bắt sự kiện khi màn hình tắt (dùng screen wake lock nếu hỗ trợ, nhưng iOS hạn chế)
+if ('wakeLock' in navigator) {
+  let wakeLock = null;
+  const requestWakeLock = async () => {
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => {
+        console.log('Wake Lock released');
+      });
+    } catch (err) {
+      console.error('Wake Lock failed:', err);
+    }
+  };
+
+  mainAudio.addEventListener('play', requestWakeLock);
+} else {
+  console.warn('Wake Lock API not supported (common on iOS)');
+}
+
+// Đảm bảo audio preload
+mainAudio.preload = 'auto';
+
+
+
+</DOCUMENT>
+
+<DOCUMENT filename="music-list.js">
+let allMusic = [
+  {
+    name: "Magnetic",
+    artist: "ILLIT",
+    img: "music-1",
+    src: "music-1"
+  },
+  {
+    name: "Lucky Girl Syndrome",
+    artist: "ILLIT",
+    img: "music-2",
+    src: "music-2"
+  },
+  {
+    name: "Midnight Fiction",
+    artist: "ILLIT",
+    img: "music-3",
+    src: "music-3"
+  },
+
+  {
+    name: "My World",
+    artist: "ILLIT",
+    img: "music-4",
+    src: "music-4"
+  },
+
+    {
+    name: "Tick Tack",
+    artist: "ILLIT",
+    img: "music-5",
+    src: "music-5"
+  },
+
+    {
+    name: "Little Monster",
+    artist: "ILLIT",
+    img: "music-6",
+    src: "music-6"
+  },
+
+  {
+    name: "Billyeoon Goyangi (Do the Dance)",
+    artist: "ILLIT",
+    img: "music-7",
+    src: "music-7"
+  },
+
+
+    {
+    name: "Bamsopoong",
+    artist: "ILLIT",
+    img: "Bamsopoong",
+    src: "Bamsopoong"
+  },
+    {
+    name: "Oops",
+    artist: "ILLIT",
+    img: "Oops",
+    src: "Oops"
+  },
+      {
+    name: "Pimple",
+    artist: "ILLIT",
+    img: "Pimple",
+    src: "Pimple"
+  },
+
+    {
+    name: "(IYKYK) If You Know You Know",
+    artist: "ILLIT",
+    img: "IfYouKnowYouKnow",
+    src: "IfYouKnowYouKnow"
+  }, 
+  {
+    name: "Cherish My Love",
+    artist: "ILLIT",
+    img: "CherishMyLove",
+    src: "CherishMyLove"
+  },
+  {
+    name: "I ll Like You",
+    artist: "ILLIT",
+    img: "IwillLikeYou",
+    src: "IwillLikeYou"
+  }, 
+
+        {
+    name: "Almond Chocolate",
+    artist: "ILLIT",
+    img: "AlmondChocolate",
+    src: "AlmondChocolate"
+  }, 
+
+      {
+    name: "Almond Chocolate Korean Ver",
+    artist: "ILLIT",
+    img: "AlmondChocolateKoreanVer",
+    src: "AlmondChocolateKoreanVer"
+  }, 
+
+    {
+    name: "Jellyous",
+    artist: "ILLIT",
+    img: "Jellyous",
+    src: "Jellyous"
+  }, 
+
+  
+
+];
+
+</DOCUMENT>
