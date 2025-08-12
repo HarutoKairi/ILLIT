@@ -277,25 +277,27 @@ body {
 .volume-container {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-left: 15px;
+  width: 150px;
+  margin: 10px 0;
 }
 
 .volume-slider {
-  width: 80px;
+  width: 100%;
   height: 4px;
-  accent-color: #4a4a4a;
+  -webkit-appearance: none;
+  background: #ddd;
+  border-radius: 10px;
+  outline: none;
 }
 
-.mute-button {
-  background: none;
-  border: none;
-  color: #4a4a4a;
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #4a00e0;
   cursor: pointer;
-  padding: 5px;
 }
-
-
 
 
 
