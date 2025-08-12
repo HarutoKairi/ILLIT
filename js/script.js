@@ -13,6 +13,51 @@ moreMusicBtn = wrapper.querySelector("#more-music"),
 closemoreMusic = musicList.querySelector("#close");
 
 
+
+
+// Kiểm tra nếu là iOS
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+if(isIOS) {
+  // Tạo audio context khi có tương tác người dùng
+  document.addEventListener('touchstart', initAudioContext, { once: true });
+  
+  function initAudioContext() {
+    try {
+      // Tạo AudioContext để đảm bảo điều khiển âm lượng
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      const audioContext = new AudioContext();
+      const source = audioContext.createMediaElementSource(mainAudio);
+      
+      // Tạo gain node để điều khiển âm lượng
+      const gainNode = audioContext.createGain();
+      source.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      // Đồng bộ volume slider với gain node
+      volumeSlider.addEventListener("input", () => {
+        gainNode.gain.value = parseFloat(volumeSlider.value);
+      });
+      
+      // Resume audio context khi cần
+      mainAudio.addEventListener('play', () => {
+        if(audioContext.state === 'suspended') {
+          audioContext.resume();
+        }
+      });
+    } catch(e) {
+      console.error('AudioContext error:', e);
+    }
+  }
+}
+
+
+
+
+
+
+
+
 const playButton = document.getElementById('playButton');
 if (playButton) {
   playButton.addEventListener('click', () => {
@@ -195,6 +240,54 @@ progressArea.addEventListener("click", (e)=>{
   playMusic(); 
   playingSong();
 });
+
+
+
+
+
+
+// Thêm vào các biến ở đầu
+const volumeContainer = wrapper.querySelector(".volume-container"),
+      volumeIcon = volumeContainer.querySelector(".volume-icon"),
+      volumeSlider = volumeContainer.querySelector(".volume-slider");
+
+// Khởi tạo âm lượng
+mainAudio.volume = 1;
+
+// Xử lý thay đổi âm lượng
+volumeSlider.addEventListener("input", () => {
+  const volumeValue = parseFloat(volumeSlider.value);
+  mainAudio.volume = volumeValue;
+  
+  // Cập nhật icon
+  volumeIcon.textContent = volumeValue === 0 ? 'volume_off' : 
+                          volumeValue < 0.5 ? 'volume_down' : 'volume_up';
+});
+
+// Xử lý tắt tiếng khi click icon
+volumeIcon.addEventListener("click", () => {
+  if(mainAudio.volume > 0) {
+    // Lưu volume hiện tại trước khi tắt
+    volumeSlider.dataset.prevVolume = mainAudio.volume;
+    mainAudio.volume = 0;
+    volumeSlider.value = 0;
+    volumeIcon.textContent = 'volume_off';
+  } else {
+    // Khôi phục volume trước đó
+    const prevVolume = parseFloat(volumeSlider.dataset.prevVolume) || 0.7;
+    mainAudio.volume = prevVolume;
+    volumeSlider.value = prevVolume;
+    volumeIcon.textContent = prevVolume < 0.5 ? 'volume_down' : 'volume_up';
+  }
+});
+
+
+
+
+
+
+
+
 
 // PHẦN CÒN LẠI GIỮ NGUYÊN
 const repeatBtn = wrapper.querySelector("#repeat-plist");
