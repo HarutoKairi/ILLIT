@@ -1,38 +1,25 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
- 
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!-- PWA hiện đại
-<link rel="manifest" href="/manifest.json">  -->
-<meta name="theme-color" content="#1f1f27">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#1f1f27">
+  <link rel="apple-touch-icon" href="icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
   
-<link rel="apple-touch-icon" href="icon.png">
-
-<!-- Toàn màn hình an toàn với notch -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Chrome/Android -->
-<meta name="mobile-web-app-capable" content="yes">
-
-<!-- Tùy chọn: iOS cũ (nếu vẫn cần) 
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> -->
-
-
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
   
-  <title>ILLIT - Trình Phát Nhạc</title>
+  <title>ILLIT</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="shortcut icon" href="./logo.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="./logo.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-
-/* for iOS */
-     :root{
+    /* for iOS */
+    :root {
       --sat: env(safe-area-inset-top);
       --sab: env(safe-area-inset-bottom);
       --sar: env(safe-area-inset-right);
@@ -40,11 +27,6 @@
       --vh: 1vh; /* fallback JS */
     }
     
-
-  
-
-  
-  
     * {
       margin: 0;
       padding: 0;
@@ -52,48 +34,29 @@
       font-family: 'Poppins', sans-serif;
     }
 
-
-
-
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background: #1a0933;
-  backdrop-filter: blur(8px); /* Tạo hiệu ứng mờ */
-  -webkit-backdrop-filter: blur(20px); /* Cho Safari */
-  color: #fff;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* Thêm padding vùng notch và thanh điều hướng */
-body {
-  min-height: calc(100dvh + env(safe-area-inset-top) + env(safe-area-inset-bottom));
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  box-sizing: border-box;
-   background: linear-gradient(135deg, #1a0933, #3c1a6d);
-   color: #fff; 
-}
-
-
-
-    
-    /*
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
       height: 100%;
-      background: linear-gradient(135deg, #1a0933, #3c1a6d);
-      color: #fff; 
+      background: #1a0933;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(20px);
+      color: #fff;
       overflow-x: hidden;
       position: relative;
     }
-*/
-    
-    
-    /* Hiệu ứng hạt */
+
+    body {
+      min-height: calc(100dvh + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      box-sizing: border-box;
+      background: linear-gradient(135deg, #1a0933, #3c1a6d);
+      color: #fff; 
+    }
+
     #particles-js {
       position: fixed;
       width: 100%;
@@ -101,7 +64,7 @@ body {
       top: 0;
       left: 0;
       z-index: 0;
-        pointer-events: none;
+      pointer-events: none;
     }
     
     .container {
@@ -117,8 +80,6 @@ body {
       position: relative;
     }
 
-    
-    
     .logo {
       font-family: 'Montserrat', sans-serif;
       font-size: 3.5rem;
@@ -136,7 +97,6 @@ body {
       margin-bottom: 30px;
     }
     
-    /* Tab navigation */
     .tabs {
       display: flex;
       justify-content: center;
@@ -195,10 +155,9 @@ body {
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Player Tab */
- /*   .wrapper {
+    .wrapper {
       background: rgba(30, 20, 60, 0.7);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
       border-radius: 25px;
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
       max-width: 450px;
@@ -207,30 +166,8 @@ body {
       position: relative;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.1);
+      min-height: auto;
     }
-*/
-
-
-
-
-
-
-    .wrapper {
-  background: rgba(30, 20, 60, 0.7);
-  backdrop-filter: blur(8px);
-  border-radius: 25px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-  max-width: 450px;
-  margin: 0 auto;
-  padding: 25px;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  min-height: auto;  /* Tăng min-height để wrapper cao hơn, hiển thị được ~12-15 bài mà không cuộn nhiều */
-}
-
-
-    
     
     .top-bar {
       display: flex;
@@ -302,117 +239,50 @@ body {
       color: #a29ebd;
     }
 
-
-
-    /*
     .progress-area {
-      margin-bottom: 30px;
-    }
-    
-    .progress-bar {
       height: 6px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      margin-bottom: 10px;
+      border-radius: 50px;
+      background: #f0f0f0;
       cursor: pointer;
-      
-      position: relative;
-      
     }
-    
-    .progress-bar .progress {
-      height: 100%;
+    .progress-area .progress-bar {
+      height: inherit;
       width: 0%;
-      background: linear-gradient(90deg, #ff6ec4, #7873f5);
-      border-radius: 10px;
       position: relative;
-
-       transition: width 0.1s linear;
+      border-radius: inherit;
+      background: #df73b3;
     }
-    
-  .progress-bar .progress::before {
-      content: '';
+    .progress-bar::before {
+      content: "";
       position: absolute;
       height: 12px;
       width: 12px;
-      background: #fff;
       border-radius: 50%;
-      right: -5px;
       top: 50%;
+      right: -5px;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
       transform: translateY(-50%);
-      box-shadow: 0 0 10px rgba(120, 115, 245, 0.8);
-    /*  transition: opacity 0.2s ease; 
+      background: inherit;
+      transition: opacity 0.2s ease;
+    }
+    .progress-area:hover .progress-bar::before {
       opacity: 1;
+      pointer-events: none;
     }
-
-
-
-    
-  
-
-     .progress-bar:hover .progress::before {
-      opacity: 1;
+    .progress-area .song-timer {
+      margin-top: 2px;
     }
-    
-
-    
-    .song-timer {
-      display: flex;
-      justify-content: space-between;
-      color: #a29ebd;
-      font-size: 0.9rem;
+    .song-timer span {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--lightback);
     }
-    */
-
-.progress-area {
-  height: 6px;
-  width: 100%;
-  border-radius: 50px;
-  background: #f0f0f0;
-  cursor: pointer;
-}
-.progress-area .progress-bar {
-  height: inherit;
-  width: 0%;
-  position: relative;
-  border-radius: inherit;
-  background: #df73b3;
-}
-.progress-bar::before {
-  content: "";
-  position: absolute;
-  height: 12px;
-  width: 12px;
-  border-radius: 50%;
-  top: 50%;
-  right: -5px;
-  z-index: 2;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-50%);
-  background: inherit;
-  transition: opacity 0.2s ease;
-}
-.progress-area:hover .progress-bar::before {
-  opacity: 1;
-  pointer-events: none;
-}
-.progress-area .song-timer {
-  margin-top: 2px;
-}
-.song-timer span {
-  margin-top: 10px;
-  font-size: 13px;
-  color: var(--lightback);
-}
-
-
-
     
     .controls {
-
-        margin-top: 30px;
+      margin-top: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -456,13 +326,11 @@ body {
       margin: 0;
     }
     
-    /* Music List */
-/*    .music-list {
+    .music-list {
       position: absolute;
-      background: rgba(30, 20, 60, 0.95);
+      background: rgba(42, 36, 63, 0.5);
       backdrop-filter: blur(10px);
       width: 100%;
-      height: 100%;
       top: 0;
       left: 0;
       border-radius: 25px;
@@ -471,27 +339,8 @@ body {
       transition: transform 0.3s ease;
       z-index: 10;
       overflow-y: auto;
+      max-height: 100%;
     }
-
-*/
-
-    .music-list {
-  position: absolute;
-  background: rgba(42, 36, 63, 0.5);  /* rgb(42 36 63 / 50%) */
-  backdrop-filter: blur(10px);
-  width: 100%;
-  /* height: 600px;  Đổi từ 100% thành auto để tự mở rộng theo nội dung 
- min-height: auto;   Đảm bảo ít nhất bằng parent */
-  top: 0;
-  left: 0;
-  border-radius: 25px;
-  padding: 25px;
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  z-index: 10;
-  overflow-y: auto;  /* Giữ cuộn nếu quá dài */
-  max-height: 100%;  /* Giới hạn tối đa để tránh tràn màn hình, điều chỉnh theo nhu cầu */
-}
     
     .music-list.show {
       transform: translateX(0);
@@ -533,11 +382,9 @@ body {
     
     .music-list ul {
       list-style: none;
-
       max-height: 100%;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-    
+      overflow-y: auto;
+      scroll-behavior: smooth;
     }
     
     .music-list ul li {
@@ -586,7 +433,6 @@ body {
       color: #a29ebd;
     }
     
-    /* Info Tab */
     .info-tab {
       background: rgba(30, 20, 60, 0.7);
       backdrop-filter: blur(10px);
@@ -723,6 +569,90 @@ body {
       margin-bottom: 10px;
     }
     
+    /* PWA Install Button */
+    .install-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, #ff6ec4, #7873f5);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(120, 115, 245, 0.5);
+      z-index: 1000;
+      display: none;
+      transition: all 0.3s ease;
+    }
+    
+    .install-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(120, 115, 245, 0.7);
+    }
+    
+    .install-btn i {
+      margin-right: 8px;
+    }
+    
+    /* iOS PWA Splash Screen */
+    #ios-splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a0933, #3c1a6d);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 10000;
+      transition: opacity 0.5s ease;
+    }
+    
+    #ios-splash.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    #ios-splash .logo {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    
+    #ios-splash .splash-text {
+      font-size: 1.5rem;
+      color: #d0cde7;
+      text-align: center;
+      max-width: 80%;
+      margin-top: 20px;
+    }
+    
+    #ios-splash .splash-subtext {
+      font-size: 1rem;
+      color: #a29ebd;
+      margin-top: 30px;
+      text-align: center;
+      max-width: 80%;
+    }
+    
+    #ios-splash .tap-to-start {
+      position: absolute;
+      bottom: 50px;
+      font-size: 1.2rem;
+      color: #ff6ec4;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+    
     /* Responsive */
     @media (max-width: 768px) {
       .logo {
@@ -773,37 +703,34 @@ body {
       .play-pause i {
         font-size: 28px;
       }
-    }
-    /* ILLIT effect */
-    .illit-effect {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      background: radial-gradient(circle at center, rgba(255, 110, 196, 0.1) 0%, transparent 70%);
-      animation: pulse 5s infinite ease-in-out;
+      
+      .install-btn {
+        bottom: 70px;
+        padding: 10px 20px;
+        font-size: 14px;
+      }
     }
     
-    @keyframes pulse {
-      0% { opacity: 0; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(1.2); }
-    }
+
     
-    
+  
   </style>
 </head>
 <body>
 
-  
-
-<div class="main-content">
-    <!-- Nội dung chính -->
+  <!-- iOS PWA Splash Screen -->
+  <div id="ios-splash">
+    <h1 class="logo">ILLIT</h1>
+    <p class="splash-text">Trình phát nhạc chính thức của ILLIT</p>
+    <p class="splash-subtext">Để có trải nghiệm tốt nhất, hãy thêm ứng dụng vào màn hình chính</p>
+    <p class="tap-to-start">Chạm để bắt đầu</p>
   </div>
   
+  <!-- Install Button -->
+  <button id="install-btn" class="install-btn">
+    <i class="material-icons">add_to_home_screen</i>
+    Thêm vào màn hình chính
+  </button>
   
   <!-- Hiệu ứng hạt -->
   <div id="particles-js"></div>
@@ -838,9 +765,7 @@ body {
           <p class="artist"></p>
         </div>
 
-
-        
-               <div class="progress-area">
+        <div class="progress-area">
           <div class="progress-bar">
             <audio src="" id="main-audio"></audio>
             <div class="progress"></div>
@@ -851,7 +776,6 @@ body {
           </div>
         </div>
 
-
         <div class="controls">
           <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
           <i id="prev" class="material-icons" >skip_previous</i>
@@ -861,9 +785,8 @@ body {
           <i id="next" class="material-icons" >skip_next</i>
           <i id="more-music" class="material-icons" >queue_music</i>
         </div>
-
-      
-
+        
+       
         <div class="music-list">
           <div class="header">
             <div class="row">
@@ -889,67 +812,67 @@ body {
           <p>Với sự kết hợp hoàn hảo giữa giọng hát, vũ đạo sáng tạo và hình ảnh đẹp mắt, ILLIT đang nhanh chóng trở thành một trong những nhóm nhạc nữ hàng đầu của K-Pop thế hệ mới.</p>
         </div>
         
-          <div class="members">
-        <div class="member-card">
-          <div class="member-img">
-            <img src="images/yunah.jpg" alt="Yunah">
+        <div class="members">
+          <div class="member-card">
+            <div class="member-img">
+              <img src="images/yunah.jpg" alt="Yunah">
+            </div>
+            <div class="member-info">
+              <h3>Yunah</h3>
+              <div class="position">Main Dancer, Lead Vocalist</div>
+              <div class="country">🇰🇷</div>
+              <div class="birthdate">15/01/2004</div>
+            </div>
           </div>
-          <div class="member-info">
-            <h3>Yunah</h3>
-            <div class="position">Main Dancer, Lead Vocalist</div>
-            <div class="country">🇰🇷</div>
-            <div class="birthdate">15/01/2004</div>
+          
+          <div class="member-card">
+            <div class="member-img">
+              <img src="images/minju.jpg" alt="Minju">
+            </div>
+            <div class="member-info">
+              <h3>Minju</h3>
+              <div class="position">Main Vocalist, Lead Rapper, Dancer, Center</div>
+              <div class="country">🇰🇷</div>
+              <div class="birthdate">11/05/2004</div>
+            </div>
+          </div>
+          
+          <div class="member-card">
+            <div class="member-img">
+              <img src="images/moka.jpg" alt="Moka">
+            </div>
+            <div class="member-info">
+              <h3>Moka</h3>
+              <div class="position">Lead Dancer, Main Rapper, Visual</div>
+              <div class="country">🇯🇵</div>
+              <div class="birthdate">08/10/2004</div>
+            </div>
+          </div>
+          
+          <div class="member-card">
+            <div class="member-img">
+              <img src="images/wonhee.jpg" alt="Wonhee">
+            </div>
+            <div class="member-info">
+              <h3>Wonhee</h3>
+              <div class="position">Lead Vocalist, Face of the group, Center</div>
+              <div class="country">🇰🇷</div>
+              <div class="birthdate">26/06/2007</div>
+            </div>
+          </div>
+          
+          <div class="member-card">
+            <div class="member-img">
+              <img src="images/iroha.jpg" alt="Iroha">
+            </div>
+            <div class="member-info">
+              <h3>Iroha</h3>
+              <div class="position">Main Dancer, Main Vocalist, Maknae</div>
+              <div class="country">🇯🇵</div>
+              <div class="birthdate">04/02/2008</div>
+            </div>
           </div>
         </div>
-        
-        <div class="member-card">
-          <div class="member-img">
-            <img src="images/minju.jpg" alt="Minju">
-          </div>
-          <div class="member-info">
-            <h3>Minju</h3>
-            <div class="position">Main Vocalist, Lead Rapper, Dancer, Center</div>
-            <div class="country">🇰🇷</div>
-            <div class="birthdate">11/05/2004</div>
-          </div>
-        </div>
-        
-        <div class="member-card">
-          <div class="member-img">
-            <img src="images/moka.jpg" alt="Moka">
-          </div>
-          <div class="member-info">
-            <h3>Moka</h3>
-            <div class="position">Lead Dancer, Main Rapper, Visual</div>
-            <div class="country">🇯🇵</div>
-            <div class="birthdate">08/10/2004</div>
-          </div>
-        </div>
-        
-        <div class="member-card">
-          <div class="member-img">
-            <img src="images/wonhee.jpg" alt="Wonhee">
-          </div>
-          <div class="member-info">
-            <h3>Wonhee</h3>
-            <div class="position">Lead Vocalist, Face of the group, Center</div>
-            <div class="country">🇰🇷</div>
-            <div class="birthdate">26/06/2007</div>
-          </div>
-        </div>
-        
-        <div class="member-card">
-          <div class="member-img">
-            <img src="images/iroha.jpg" alt="Iroha">
-          </div>
-          <div class="member-info">
-            <h3>Iroha</h3>
-            <div class="position">Main Dancer, Main Vocalist, Maknae</div>
-            <div class="country">🇯🇵</div>
-            <div class="birthdate">04/02/2008</div>
-          </div>
-        </div>
-      </div>
         
         <div class="designer-info">
           <h2>Tác giả thiết kế</h2>
@@ -959,9 +882,6 @@ body {
       </div>
     </div>
   </div>
-  
-  <!-- ILLIT effect overlay 
-  <div class="illit-effect"></div> -->
 
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
@@ -1075,7 +995,13 @@ body {
       });
     });
     
-
+    // Volume control
+    const audio = document.getElementById('main-audio');
+    const volumeSlider = document.getElementById('volume-slider');
+    volumeSlider.addEventListener('input', () => {
+      audio.volume = volumeSlider.value;
+    });
+    
     // Clear cache and reload button
     const clearCacheBtn = document.createElement('i');
     clearCacheBtn.classList.add('material-icons');
@@ -1094,9 +1020,181 @@ body {
       location.reload(true);
     });
     document.body.appendChild(clearCacheBtn);
+    
+    // ============= PWA FEATURES =============
+    
+    // 1. Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(error => {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+    }
+    
+    // 2. Install Button
+    const installButton = document.getElementById('install-btn');
+    let deferredPrompt;
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Ngăn trình duyệt tự động hiển thị prompt
+      e.preventDefault();
+      
+      // Lưu sự kiện để có thể kích hoạt sau
+      deferredPrompt = e;
+      
+      // Hiển thị nút cài đặt
+      installButton.style.display = 'block';
+    });
+    
+    installButton.addEventListener('click', () => {
+      if (deferredPrompt) {
+        // Hiển thị prompt cài đặt
+        deferredPrompt.prompt();
+        
+        // Xử lý kết quả
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('Người dùng chấp nhận cài đặt');
+          } else {
+            console.log('Người dùng từ chối cài đặt');
+          }
+          
+          // Xóa sự kiện sau khi đã sử dụng
+          deferredPrompt = null;
+          
+          // Ẩn nút cài đặt
+          installButton.style.display = 'none';
+        });
+      }
+    });
+    
+    // 3. iOS PWA Splash Screen
+    const iosSplash = document.getElementById('ios-splash');
+    
+    // Kiểm tra nếu là iOS và ở chế độ standalone (đã thêm vào màn hình chính)
+    const isIOS = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    };
+    
+    const isInStandaloneMode = () => ('standalone' in window.navigator) && window.navigator.standalone;
+    
+    // Xử lý splash screen cho iOS
+    if (isIOS() && isInStandaloneMode()) {
+      // Đã được thêm vào màn hình chính - ẩn splash sau 2s
+      setTimeout(() => {
+        iosSplash.classList.add('hidden');
+      }, 2000);
+    } else if (isIOS()) {
+      // Chưa thêm vào màn hình chính - hiển thị splash và hướng dẫn thêm
+      iosSplash.addEventListener('click', () => {
+        iosSplash.classList.add('hidden');
+      });
+    } else {
+      // Không phải iOS - ẩn splash
+      iosSplash.classList.add('hidden');
+    }
+    
+    // 4. Xử lý phát nhạc trong chế độ PWA iOS
+    // iOS yêu cầu tương tác người dùng trước khi phát nhạc
+    document.addEventListener('click', initAudioContext, { once: true });
+    
+    function initAudioContext() {
+      // Tạo một context âm thanh ngắn để kích hoạt phát nhạc
+      const silentAudio = new Audio();
+      silentAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAA';
+      silentAudio.play().catch(e => console.log('Silent audio play error', e));
+      
+      // Kích hoạt phát nhạc thật sau khi đã có tương tác
+      if (audio) {
+        audio.play().catch(e => console.log('Audio play error', e));
+      }
+    }
+    
+    // 5. Xử lý khi ứng dụng được khởi chạy từ màn hình chính
+    window.addEventListener('load', () => {
+      if (isInStandaloneMode()) {
+        console.log('Ứng dụng đang chạy ở chế độ PWA');
+        // Có thể thực hiện các hành động đặc biệt khi chạy ở chế độ PWA
+      }
+    });
+    
+    // ============= END PWA FEATURES =============
   </script>
 
-    <script src="app.js"></script>
+  <!-- Service Worker Script (Inline) -->
+  <script>
+    // Tạo service worker động
+    if ('serviceWorker' in navigator) {
+      const swScript = `
+        const CACHE_NAME = 'illit-music-player-v1';
+        const urlsToCache = [
+          '/',
+          '/index.html',
+          './js/music-list.js',
+          './js/script.js',
+          './logo.svg',
+          'images/yunah.jpg',
+          'images/minju.jpg',
+          'images/moka.jpg',
+          'images/wonhee.jpg',
+          'images/iroha.jpg'
+        ];
+        
+        self.addEventListener('install', event => {
+          event.waitUntil(
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                return cache.addAll(urlsToCache);
+              })
+          );
+        });
+        
+        self.addEventListener('fetch', event => {
+          event.respondWith(
+            caches.match(event.request)
+              .then(response => {
+                if (response) {
+                  return response;
+                }
+                return fetch(event.request);
+              })
+          );
+        });
+        
+        self.addEventListener('activate', event => {
+          const cacheWhitelist = [CACHE_NAME];
+          event.waitUntil(
+            caches.keys().then(cacheNames => {
+              return Promise.all(
+                cacheNames.map(cacheName => {
+                  if (cacheWhitelist.indexOf(cacheName) === -1) {
+                    return caches.delete(cacheName);
+                  }
+                })
+              );
+            })
+          );
+        });
+      `;
+      
+      const blob = new Blob([swScript], {type: 'application/javascript'});
+      const swUrl = URL.createObjectURL(blob);
+      
+      navigator.serviceWorker.register(swUrl)
+        .then(registration => {
+          console.log('Dynamic Service Worker registered with scope:', registration.scope);
+        })
+        .catch(error => {
+          console.error('Dynamic Service Worker registration failed:', error);
+        });
+    }
+  </script>
 
   <script src="./js/music-list.js"></script>
   <script src="./js/script.js"></script>
