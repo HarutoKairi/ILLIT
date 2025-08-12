@@ -15,44 +15,6 @@ closemoreMusic = musicList.querySelector("#close");
 
 
 
-// Kiểm tra nếu là iOS
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-if(isIOS) {
-  // Tạo audio context khi có tương tác người dùng
-  document.addEventListener('touchstart', initAudioContext, { once: true });
-  
-  function initAudioContext() {
-    try {
-      // Tạo AudioContext để đảm bảo điều khiển âm lượng
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      const audioContext = new AudioContext();
-      const source = audioContext.createMediaElementSource(mainAudio);
-      
-      // Tạo gain node để điều khiển âm lượng
-      const gainNode = audioContext.createGain();
-      source.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      
-      // Đồng bộ volume slider với gain node
-      volumeSlider.addEventListener("input", () => {
-        gainNode.gain.value = parseFloat(volumeSlider.value);
-      });
-      
-      // Resume audio context khi cần
-      mainAudio.addEventListener('play', () => {
-        if(audioContext.state === 'suspended') {
-          audioContext.resume();
-        }
-      });
-    } catch(e) {
-      console.error('AudioContext error:', e);
-    }
-  }
-}
-
-
-
 
 
 
@@ -244,42 +206,106 @@ progressArea.addEventListener("click", (e)=>{
 
 
 
-
-
-// Thêm vào các biến ở đầu
+// Thêm vào phần khai báo biến đầu tiên
 const volumeContainer = wrapper.querySelector(".volume-container"),
       volumeIcon = volumeContainer.querySelector(".volume-icon"),
       volumeSlider = volumeContainer.querySelector(".volume-slider");
 
-// Khởi tạo âm lượng
-mainAudio.volume = 1;
+// Khởi tạo âm lượng mặc định (50%)
+mainAudio.volume = 0.5;
+volumeSlider.value = 0.5;
 
 // Xử lý thay đổi âm lượng
-volumeSlider.addEventListener("input", () => {
-  const volumeValue = parseFloat(volumeSlider.value);
-  mainAudio.volume = volumeValue;
+volumeSlider.addEventListener("input", function() {
+  const volume = parseFloat(this.value);
+  mainAudio.volume = volume;
   
-  // Cập nhật icon
-  volumeIcon.textContent = volumeValue === 0 ? 'volume_off' : 
-                          volumeValue < 0.5 ? 'volume_down' : 'volume_up';
+  // Cập nhật icon theo mức âm lượng
+  if (volume === 0) {
+    volumeIcon.innerText = "volume_off";
+  } else if (volume < 0.5) {
+    volumeIcon.innerText = "volume_down";
+  } else {
+    volumeIcon.innerText = "volume_up";
+  }
+  
+  // Lưu cài đặt âm lượng vào localStorage
+  localStorage.setItem('volume', volume);
 });
 
-// Xử lý tắt tiếng khi click icon
+// Xử lý tắt/mở tiếng khi click icon
 volumeIcon.addEventListener("click", () => {
-  if(mainAudio.volume > 0) {
-    // Lưu volume hiện tại trước khi tắt
-    volumeSlider.dataset.prevVolume = mainAudio.volume;
+  if (mainAudio.volume > 0) {
+    // Lưu âm lượng hiện tại trước khi tắt
+    mainAudio.dataset.lastVolume = mainAudio.volume;
     mainAudio.volume = 0;
     volumeSlider.value = 0;
-    volumeIcon.textContent = 'volume_off';
+    volumeIcon.innerText = "volume_off";
   } else {
-    // Khôi phục volume trước đó
-    const prevVolume = parseFloat(volumeSlider.dataset.prevVolume) || 0.7;
-    mainAudio.volume = prevVolume;
-    volumeSlider.value = prevVolume;
-    volumeIcon.textContent = prevVolume < 0.5 ? 'volume_down' : 'volume_up';
+    // Khôi phục âm lượng trước đó hoặc mặc định
+    const lastVolume = parseFloat(mainAudio.dataset.lastVolume) || 0.5;
+    mainAudio.volume = lastVolume;
+    volumeSlider.value = lastVolume;
+    volumeIcon.innerText = lastVolume < 0.5 ? "volume_down" : "volume_up";
   }
 });
+
+// Khôi phục cài đặt âm lượng khi tải trang
+window.addEventListener("load", () => {
+  const savedVolume = localStorage.getItem('volume');
+  if (savedVolume !== null) {
+    const volume = parseFloat(savedVolume);
+    mainAudio.volume = volume;
+    volumeSlider.value = volume;
+    
+    if (volume === 0) {
+      volumeIcon.innerText = "volume_off";
+    } else if (volume < 0.5) {
+      volumeIcon.innerText = "volume_down";
+    } else {
+      volumeIcon.innerText = "volume_up";
+    }
+  }
+});
+// Sửa lỗi không thể thay đổi âm lượng trên iOS
+volumeSlider.addEventListener("touchstart", () => {
+  // Kích hoạt context audio trên iOS
+  if (mainAudio.paused) {
+    const playPromise = mainAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        mainAudio.pause();
+      }).catch(() => {});
+    }
+  }
+});
+// Xử lý tương thích đa nền tảng
+function setupVolumeControl() {
+  // Kiểm tra xem trình duyệt có hỗ trợ volume không
+  if (typeof mainAudio.volume === 'undefined') {
+    volumeContainer.style.display = 'none';
+    return;
+  }
+  
+  // Cập nhật giao diện theo trạng thái hiện tại
+  updateVolumeUI(mainAudio.volume);
+}
+
+function updateVolumeUI(volume) {
+  volumeSlider.value = volume;
+  
+  if (volume === 0) {
+    volumeIcon.innerText = "volume_off";
+  } else if (volume < 0.5) {
+    volumeIcon.innerText = "volume_down";
+  } else {
+    volumeIcon.innerText = "volume_up";
+  }
+}
+
+// Gọi hàm thiết lập khi tải
+setupVolumeControl();
+
 
 
 
