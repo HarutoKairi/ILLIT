@@ -968,27 +968,6 @@ html, body {
 
 
 
-
-
-
-
-
-      // Trong script.js
-  document.getElementById('desktop-mode').addEventListener('click', () => {
-    document.body.classList.remove('mobile-view');
-    document.body.classList.add('desktop-view');
-  });
-  
-  document.getElementById('mobile-mode').addEventListener('click', () => {
-    document.body.classList.remove('desktop-view');
-    document.body.classList.add('mobile-view');
-
-
-
-
-
-
-
     
     // Khởi tạo hiệu ứng hạt
     particlesJS("particles-js", {
@@ -1121,6 +1100,21 @@ html, body {
     });
     document.body.appendChild(clearCacheBtn);
   </script>
+
+
+  <script>
+      // Trong script.js
+  document.getElementById('desktop-mode').addEventListener('click', () => {
+    document.body.classList.remove('mobile-view');
+    document.body.classList.add('desktop-view');
+  });
+  
+  document.getElementById('mobile-mode').addEventListener('click', () => {
+    document.body.classList.remove('desktop-view');
+    document.body.classList.add('mobile-view');
+
+</script>
+
 
 
 
