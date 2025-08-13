@@ -52,6 +52,19 @@ input, textarea, button {
   background: var(--primary-color);
 }
 
+
+
+
+
+/* Tối ưu cho iOS */
+@supports (-webkit-touch-callout: none) {
+  .controls {
+    padding-bottom: calc(15px + env(safe-area-inset-bottom));
+  }
+}
+
+
+
 /* Kiểm tra hỗ trợ grid */
 @supports (display: grid) {
   .container {
