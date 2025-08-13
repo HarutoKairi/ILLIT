@@ -21,6 +21,42 @@ self.addEventListener('install', event => {
   );
 });
 
+
+
+
+
+
+
+
+// Thêm cache động cho các file media
+self.addEventListener('fetch', event => {
+  // Cache-first cho tài nguyên tĩnh
+  if (event.request.url.includes('/songs/') || 
+      event.request.url.includes('/images/')) {
+    event.respondWith(
+      caches.match(event.request).then(response => {
+        return response || fetch(event.request).then(fetchResponse => {
+          return caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request.url, fetchResponse.clone());
+            return fetchResponse;
+          });
+        });
+      })
+    );
+    return;
+  }
+  
+  // Network-first cho các request khác
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
+  );
+});
+
+
+
+
+/*
+
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
@@ -32,6 +68,11 @@ self.addEventListener('fetch', event => {
       })
   );
 });
+
+
+*/
+
+
 
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
@@ -46,4 +87,5 @@ self.addEventListener('activate', event => {
       );
     })
   );
+
 });
