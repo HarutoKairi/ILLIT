@@ -53,12 +53,78 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+  
+  const playMusicOnInteraction = () => {
+    if (isMusicPaused) {
+      playMusic();
+      document.removeEventListener('click', playMusicOnInteraction);
+      document.removeEventListener('touchstart', playMusicOnInteraction);
+    }
+  };
+
+  // Kích hoạt autoplay sau khi người dùng tương tác
+  document.addEventListener('click', playMusicOnInteraction);
+  document.addEventListener('touchstart', playMusicOnInteraction);
+
+  // Xử lý sự kiện phím cho PC
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+      const isMusicPlay = wrapper.classList.contains("paused");
+      isMusicPlay ? pauseMusic() : playMusic();
+    }
+    if (e.code === 'ArrowRight') nextMusic();
+    if (e.code === 'ArrowLeft') prevMusic();
+  });
+
+
+
+
   
   const btn = document.querySelector('#play-btn');
   if (btn) {
     btn.addEventListener('click', handlePlay);
   }
 });
+
+
+
+
+
+
+// Xử lý chế độ toàn màn hình
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(err => {
+      console.error(`Error attempting to enable fullscreen: ${err.message}`);
+    });
+  } else {
+    if (document.exitFullscreen) document.exitFullscreen();
+  }
+}
+
+// Thêm nút toàn màn hình
+const fullscreenBtn = document.createElement('i');
+fullscreenBtn.className = 'material-icons';
+fullscreenBtn.textContent = 'fullscreen';
+fullscreenBtn.style.position = 'fixed';
+fullscreenBtn.style.bottom = '20px';
+fullscreenBtn.style.left = '20px';
+fullscreenBtn.style.fontSize = '32px';
+fullscreenBtn.style.cursor = 'pointer';
+fullscreenBtn.style.color = '#ff6ec4';
+fullscreenBtn.addEventListener('click', toggleFullScreen);
+document.body.appendChild(fullscreenBtn);
+
+
+
+
+
+
+
+
+
+
 
 
 /*
