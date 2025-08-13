@@ -54,6 +54,16 @@ input, textarea, button {
 
 
 
+/* Hiệu ứng cho PC */
+@media (hover: hover) {
+  .controls i:hover {
+    transform: scale(1.1);
+  }
+  
+  .music-list ul li:hover {
+    background: rgba(120, 115, 245, 0.2);
+  }
+}
 
 
 /* Tối ưu cho iOS */
@@ -62,6 +72,33 @@ input, textarea, button {
     padding-bottom: calc(15px + env(safe-area-inset-bottom));
   }
 }
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+  .wrapper {
+    width: 95%;
+    padding: 15px;
+    max-width: 100%;
+  }
+  
+  .img-area {
+    height: 280px;
+  }
+  
+  .controls {
+    position: fixed;
+    bottom: env(safe-area-inset-bottom);
+    left: 0;
+    padding: 10px 5px;
+  }
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -120,7 +157,7 @@ html, body {
   height: 100%;
   background: linear-gradient(135deg, #1a0933, #3c1a6d);
   color: #1f1f27;
-  overflow-x: hidden;
+/*  overflow-x: hidden; */
   position: relative;
 }
 
