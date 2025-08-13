@@ -7,12 +7,10 @@
 <!-- PWA hiện đại
 <link rel="manifest" href="/manifest.json">  -->
 <meta name="theme-color" content="#1f1f27">
-  
-<link rel="apple-touch-icon" href="icon.png">
 
 <!-- Toàn màn hình an toàn với notch -->
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -26,14 +24,11 @@
 <!-- iOS Status Bar Style -->
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<!-- iOS Web App Capable -->
-<meta name="apple-mobile-web-app-capable" content="yes">
 
 <!-- iOS Splash Screen (tùy chọn) -->
 <link rel="apple-touch-startup-image" href="splash.png">
 
   
-
 <!-- Chrome/Android -->
 <meta name="mobile-web-app-capable" content="yes">
 
@@ -49,6 +44,48 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
 
+
+
+
+    
+
+ .platform-buttons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+  }
+  
+  .platform-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #ff6ec4;
+    backdrop-filter: blur(10px);
+  }
+  
+  .platform-btn.active {
+    background: rgba(120, 115, 245, 0.3);
+  }
+
+
+
+
+
+
+
+
+
+
+    
 /* for iOS */
      :root{
       --sat: env(safe-area-inset-top);
@@ -745,6 +782,29 @@ html, body {
 <body>
 
 
+
+
+
+
+<div class="platform-buttons">
+  <button id="desktop-mode" class="platform-btn active">
+    <i class="material-icons">desktop_windows</i>
+  </button>
+  <button id="mobile-mode" class="platform-btn">
+    <i class="material-icons">smartphone</i>
+  </button>
+</div>
+
+
+
+
+
+
+
+
+
+  
+
   <!-- Hiệu ứng hạt -->
   <div id="particles-js"></div>
   
@@ -904,6 +964,32 @@ html, body {
 
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
+
+
+
+
+
+
+
+
+
+      // Trong script.js
+  document.getElementById('desktop-mode').addEventListener('click', () => {
+    document.body.classList.remove('mobile-view');
+    document.body.classList.add('desktop-view');
+  });
+  
+  document.getElementById('mobile-mode').addEventListener('click', () => {
+    document.body.classList.remove('desktop-view');
+    document.body.classList.add('mobile-view');
+
+
+
+
+
+
+
+    
     // Khởi tạo hiệu ứng hạt
     particlesJS("particles-js", {
       "particles": {
