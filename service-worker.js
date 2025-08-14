@@ -1,15 +1,15 @@
 const CACHE_NAME = 'illit-music-player-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  './js/music-list.js',
-  './js/script.js',
-  './logo.svg',
-  'images/yunah.jpg',
-  'images/minju.jpg',
-  'images/moka.jpg',
-  'images/wonhee.jpg',
-  'images/iroha.jpg'
+  '/ILLIT',
+  '/ILLIT/index.html',
+  '/ILLIT/js/music-list.js',
+  '/ILLIT/js/script.js',
+  '/ILLIT/logo.svg',
+  '/ILLIT/images/yunah.jpg',
+  '/ILLIT/images/minju.jpg',
+  '/ILLIT/images/moka.jpg',
+  '/ILLIT/images/wonhee.jpg',
+  '/ILLIT/images/iroha.jpg'
 ];
 
 self.addEventListener('install', event => {
@@ -89,3 +89,4 @@ self.addEventListener('activate', event => {
   );
 
 });
+
